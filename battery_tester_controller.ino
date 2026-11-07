@@ -28,7 +28,8 @@ const float THERMISTOR_R_NOMINAL = 10000.0; // Thermistors rated resistance at b
 const float THERMISTOR_T_NOMINAL = 25.0 + 273.15; // 25 degrees Celsius converted to Kelvin
 const float THERMISTOR_BETA = 3988.0; // Rated Beta of Thermistor
 
-const float SHUNT_RESISTOR = 0.01; // Shunt resistor is 0.01 ohms
+// const float SHUNT_RESISTOR = 0.01; // Shunt resistor is 0.01 ohms // Old
+
 const float DAC_V_IN = 5.0; // DAC voltage input is 5 volts
 const int DAC_COUNT = 4095; // DAC resolution is 12 bits (2^12 -1)
 
@@ -39,6 +40,15 @@ float mosfet_avg_temp = 0.0; // Starting temperature
 float current_requested = 0.0; // Current requested at any given time
 
 const int MOSFET_COUNT = 32;
+const float SHUNT_RESISTANCES[MOSFET_COUNT] = {0.0093, 0.0095, 0.0095, 0.0095, 
+                                             0.0095, 0.0094, 0.0095, 0.0095,
+                                             0.0095, 0.0095, 0.0096, 0.0096,
+                                             0.0095, 0.0096, 0.0095, 0.0095,
+                                             0.0096, 0.0094, 0.0095, 0.0094,
+                                             0.0095, 0.0096, 0.0096, 0.0095,
+                                             0.0095, 0.0095, 0.0096, 0.0095,
+                                             0.0095, 0.0095, 0.0095, 0.0096};
+float total_system_conductance = 0.0;
 float mosfet_currents[MOSFET_COUNT];
 float mosfet_temperatures[MOSFET_COUNT];
 
@@ -71,6 +81,7 @@ void initialize_mosfet_arrays() {
   for (byte i = 0; i < MOSFET_COUNT; i++) {
     mosfet_currents[i] = 0.0;
     mosfet_temperatures[i] = 0.0;
+    total_system_conductance += (1.0 / SHUNT_RESISTANCES[i]);
   }
 }
 
@@ -123,7 +134,8 @@ void read_mosfets() {
       ads_mosfet_temperature.setCompareChannels(ADS1115_COMP_1_GND);
     }
 
-    mosfet_currents[i] = ads_mosfet_current.getResult_V() * MOSFET_CURRENT_SCALING_FACTOR;
+    // mosfet_currents[i] = ads_mosfet_current.getResult_V() * MOSFET_CURRENT_SCALING_FACTOR; // Old
+    mosfet_currents[i] = ads_mosfet_current.getResult_V() * (1.0 / SHUNT_RESISTANCES[i]);
     total_current += mosfet_currents[i];
 
     mosfet_temperatures[i] = temperature(ads_mosfet_temperature.getResult_V());
@@ -214,8 +226,7 @@ void shut_down() {
 }
 
 void set_current_request(float current) {
-  float perChannelCurrent = current / (float) MOSFET_COUNT;
-  float targetVoltage = perChannelCurrent * SHUNT_RESISTOR;
+  float targetVoltage = current / total_system_inductance;
 
   float rawCounts = (targetVoltage / DAC_V_IN) * (float) DAC_COUNT;
   int dacOutput = round(rawCounts);
