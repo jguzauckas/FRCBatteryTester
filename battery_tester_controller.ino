@@ -226,7 +226,7 @@ void shut_down() {
 }
 
 void set_current_request(float current) {
-  float targetVoltage = current / total_system_inductance;
+  float targetVoltage = current / total_system_conductance;
 
   float rawCounts = (targetVoltage / DAC_V_IN) * (float) DAC_COUNT;
   int dacOutput = round(rawCounts);
