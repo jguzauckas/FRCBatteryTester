@@ -1,42 +1,66 @@
 #include<ADS1115_WE.h>
 #include<Wire.h>
+#include<SPI.h>
 #include<Adafruit_MCP4725.h>
 
 #define DAC_I2C_ADDRESS 0x62 // Default address for Adafruit MCP4725
-#define ADS_ROBOTBATTERY_I2C_ADDRESS 0x48 // Default address for ADS1115 (Ground)
-#define ADS_MOSFETVOLTAGE_I2C_ADDRESS 0x49 // Modified Address for ADS1115 (5V)
-#define ADS_MOSFETTEMPERATURE_I2C_ADDRESS 0x4A // Modified address for ADS1115 (SDA)
+#define ADS_BATTERY_CURRENT_I2C_ADDRESS 0x48 // U6, ADDR to GND: HTFS400-P output (AIN0) vs. its reference (AIN1)
+#define ADS_BATTERY_VOLTAGE_I2C_ADDRESS 0x49 // U3, ADDR to 5V: battery voltage divider on AIN0
 
-const int S0_PIN = 0;
-const int S1_PIN = 1;
-const int S2_PIN = 2;
-const int S3_PIN = 3;
-const int E_STOP_PIN = 4; // HIGH = 2N7000 kill switch pulls the DAC control line to ground
+// Pin numbers follow the KiCad schematic (Arduino Uno R4 WiFi shield)
+const int S0_PIN = 2; // CD74HC4067 address lines, shared by all four muxes
+const int S1_PIN = 3;
+const int S2_PIN = 4;
+const int S3_PIN = 5;
+const int E_STOP_PIN = 6; // HIGH = 2N7000 kill switch pulls the DAC control line to ground
+
+// ADS8320 chip selects. All four share SPI SCK and MISO (ICSP header).
+const int ADC_CURRENT_0_CS_PIN = 7;     // U18, V0_MUX: shunt voltages for MOSFETs 0-15
+const int ADC_CURRENT_1_CS_PIN = 8;     // U19, V1_MUX: shunt voltages for MOSFETs 16-31
+const int ADC_TEMPERATURE_0_CS_PIN = 9; // U20, T0_MUX: thermistors for MOSFETs 0-15
+const int ADC_TEMPERATURE_1_CS_PIN = 10; // U21, T1_MUX: thermistors for MOSFETs 16-31
+
+const float ADS8320_VREF = 4.096; // REF3040 reference
+const float ADS8320_COUNTS = 65536.0; // 16-bit, straight binary, 0 V to VREF
+const SPISettings ADS8320_SPI_SETTINGS(2000000, MSBFIRST, SPI_MODE0); // DCLOCK max is 2.4 MHz at 5 V
+
+// Each ADC input has a 100 ohm / 0.1 uF filter after the mux, so the cap has to recharge every time the
+// mux address changes. Shunt inputs are low impedance (tau ~17 us with mux Ron); the thermistor dividers
+// are ~5k (tau ~0.5 ms), so temperatures get a long dwell on one address per loop instead.
+const unsigned int CURRENT_SETTLE_US = 150; // ~8 time constants
+const unsigned int TEMPERATURE_SETTLE_US = 3000; // ~6 time constants
 
 const unsigned long COMMAND_TIMEOUT_MS = 1000; // Drop the load to 0 A if no command arrives for this long
 
 Adafruit_MCP4725 dac;
-ADS1115_WE ads_robot_battery = ADS1115_WE(ADS_ROBOTBATTERY_I2C_ADDRESS);
-ADS1115_WE ads_mosfet_current = ADS1115_WE(ADS_MOSFETVOLTAGE_I2C_ADDRESS);
-ADS1115_WE ads_mosfet_temperature = ADS1115_WE(ADS_MOSFETTEMPERATURE_I2C_ADDRESS);
+ADS1115_WE ads_battery_current = ADS1115_WE(ADS_BATTERY_CURRENT_I2C_ADDRESS);
+ADS1115_WE ads_battery_voltage = ADS1115_WE(ADS_BATTERY_VOLTAGE_I2C_ADDRESS);
 
 const float ROBOT_BATTERY_V_SCALING_FACTOR = (12000.0 + 4700.0) / 4700.0; // 12k top resistor (10k + 1k + 1k) and 4.7k bottom resistor
 const float ROBOT_BATTERY_I_SCALING_FACTOR = 400 / 0.625; // 400 amps across 0.625 volt range
-const float MOSFET_CURRENT_SCALING_FACTOR = 1.0 / 0.01; // voltage over 0.01 ohm shunt resistor
 
-const float THERMISTOR_R_FIXED = 10000.0; // Fixed resistor for voltage divider
+const float THERMISTOR_R_FIXED = 4700.0; // Fixed (bottom) resistor for voltage divider, 4.7k so 85 C stays under the 4.096 V reference
 const float THERMISTOR_V_IN = 5.0; // Voltage going into Thermistor
 const float THERMISTOR_R_NOMINAL = 10000.0; // Thermistors rated resistance at base temperature
 const float THERMISTOR_T_NOMINAL = 25.0 + 273.15; // 25 degrees Celsius converted to Kelvin
 const float THERMISTOR_BETA = 3988.0; // Rated Beta of Thermistor
 const float THERMISTOR_V_MIN_VALID = 0.05; // Below this the thermistor is open/disconnected
-const float THERMISTOR_V_MAX_VALID = THERMISTOR_V_IN - 0.05; // Above this the reading is shorted or saturated
-const float TEMPERATURE_FAULT = -999.0; // Returned when a thermistor reading can't be trusted
+// The ADS8320 tops out at 4.096 V but the divider runs from 5 V. With the 4.7k bottom resistor, 85 C reads
+// about 4.08 V, so readings above THERMISTOR_V_MAX_VALID (about 84 C on a 5.0 V rail) count as saturated.
+// A saturated reading (too hot to measure, or a shorted thermistor) is reported as TEMPERATURE_SATURATED,
+// which trips the over-temperature shutdown.
+const float THERMISTOR_V_MAX_VALID = ADS8320_VREF - 0.05;
+const float TEMPERATURE_FAULT = -999.0; // Open or disconnected thermistor
+const float TEMPERATURE_SATURATED = 999.0; // Above the measurable range
 
 // const float SHUNT_RESISTOR = 0.01; // Shunt resistor is 0.01 ohms // Old
 
 const float DAC_V_IN = 5.0; // DAC voltage input is 5 volts
 const int DAC_COUNT = 4095; // DAC resolution is 12 bits (2^12 -1)
+// The DAC output goes through a 4.7k (R178) / 120 ohm (R38) divider before the op-amps,
+// so full scale on DAC Control is about 0.124 V (about 13 A per MOSFET).
+const float DAC_DIVIDER_RATIO = 120.0 / (4700.0 + 120.0);
+const float MAX_CURRENT_REQUEST = 10.0 * 32; // 10 A average per MOSFET, under the 11 A per-MOSFET trip
 
 float robot_battery_v = 12.0; // Starting voltage (high enough to prevent shutdown)
 float robot_battery_i = 0.0; // Starting current (low enough to prevent shutdown)
@@ -57,6 +81,7 @@ const float SHUNT_RESISTANCES[MOSFET_COUNT] = {0.0093, 0.0095, 0.0095, 0.0095,
 float total_system_conductance = 0.0;
 float mosfet_currents[MOSFET_COUNT];
 float mosfet_temperatures[MOSFET_COUNT];
+byte next_temperature_address = 0; // Mux address whose thermistors get read on the next loop
 
 void setup() {
   pinMode(E_STOP_PIN, OUTPUT);
@@ -67,26 +92,43 @@ void setup() {
   pinMode(S2_PIN, OUTPUT);
   pinMode(S3_PIN, OUTPUT);
 
+  pinMode(ADC_CURRENT_0_CS_PIN, OUTPUT);
+  pinMode(ADC_CURRENT_1_CS_PIN, OUTPUT);
+  pinMode(ADC_TEMPERATURE_0_CS_PIN, OUTPUT);
+  pinMode(ADC_TEMPERATURE_1_CS_PIN, OUTPUT);
+  digitalWrite(ADC_CURRENT_0_CS_PIN, HIGH);
+  digitalWrite(ADC_CURRENT_1_CS_PIN, HIGH);
+  digitalWrite(ADC_TEMPERATURE_0_CS_PIN, HIGH);
+  digitalWrite(ADC_TEMPERATURE_1_CS_PIN, HIGH);
+
   Serial.begin(9600);
   Serial.setTimeout(10);
 
   initialize_mosfet_arrays();
 
+  Wire.begin();
+  SPI.begin();
+
   dac.begin(DAC_I2C_ADDRESS);
   dac.setVoltage(0, false); // Make sure the load starts at 0 A before the kill switch is released
-  
-  ads_robot_battery.setVoltageRange_mV(ADS1115_RANGE_4096);
-  ads_robot_battery.setMeasureMode(ADS1115_CONTINUOUS);
 
-  ads_mosfet_current.setVoltageRange_mV(ADS1115_RANGE_0256);
-  ads_mosfet_current.setMeasureMode(ADS1115_CONTINUOUS);
+  // Each ADS1115 now reads a single input, so the channel is set once and never switched.
+  ads_battery_current.init();
+  ads_battery_current.setVoltageRange_mV(ADS1115_RANGE_4096);
+  ads_battery_current.setCompareChannels(ADS1115_COMP_0_1);
+  ads_battery_current.setMeasureMode(ADS1115_CONTINUOUS);
 
-  // The thermistor divider runs from 5 V, so it needs the 6.144 V range. On the 4.096 V range the
-  // reading saturates at about 63 C and the 85 C trip could never fire.
-  ads_mosfet_temperature.setVoltageRange_mV(ADS1115_RANGE_6144);
-  ads_mosfet_temperature.setMeasureMode(ADS1115_CONTINUOUS);
+  ads_battery_voltage.init();
+  ads_battery_voltage.setVoltageRange_mV(ADS1115_RANGE_4096);
+  ads_battery_voltage.setCompareChannels(ADS1115_COMP_0_GND);
+  ads_battery_voltage.setMeasureMode(ADS1115_CONTINUOUS);
 
   delay(1000); // Give hardware time to stabilize
+
+  // Read every thermistor once so no MOSFET starts with an unchecked temperature.
+  for (byte address = 0; address < 16; address++) {
+    read_mosfet_temperatures();
+  }
 
   last_command_ms = millis();
   digitalWrite(E_STOP_PIN, LOW);
@@ -120,6 +162,9 @@ void loop() {
       if (requested < 0.0) {
         requested = 0.0;
       }
+      if (requested > MAX_CURRENT_REQUEST) {
+        requested = MAX_CURRENT_REQUEST;
+      }
       current_requested = requested;
       last_command_ms = millis();
     }
@@ -139,50 +184,64 @@ void loop() {
 }
 
 void read_robot_battery() {
-  ads_robot_battery.setCompareChannels(ADS1115_COMP_0_1);
-  robot_battery_i = ads_robot_battery.getResult_V() * ROBOT_BATTERY_I_SCALING_FACTOR;
-  
-  ads_robot_battery.setCompareChannels(ADS1115_COMP_2_GND);
-  robot_battery_v = ads_robot_battery.getResult_V() * ROBOT_BATTERY_V_SCALING_FACTOR;
+  robot_battery_i = ads_battery_current.getResult_V() * ROBOT_BATTERY_I_SCALING_FACTOR;
+  robot_battery_v = ads_battery_voltage.getResult_V() * ROBOT_BATTERY_V_SCALING_FACTOR;
 }
 
 void read_mosfets() {
+  read_mosfet_currents();
+  read_mosfet_temperatures();
+}
+
+// Sweep all 16 mux addresses. At each address U18 reads MOSFET n and U19 reads MOSFET n + 16.
+void read_mosfet_currents() {
   float total_current = 0.0;
-  float total_temperature = 0.0;
-  for (byte i = 0; i < MOSFET_COUNT; i++) {
-    set_mosfet_mux_address(mosfet_index(i));
-    
-    if (i == 0) {
-      ads_mosfet_current.setCompareChannels(ADS1115_COMP_0_GND);
-      ads_mosfet_temperature.setCompareChannels(ADS1115_COMP_0_GND);
-    } else if (i == 16) {
-      ads_mosfet_current.setCompareChannels(ADS1115_COMP_1_GND);
-      ads_mosfet_temperature.setCompareChannels(ADS1115_COMP_1_GND);
-    }
+  for (byte address = 0; address < 16; address++) {
+    set_mosfet_mux_address(address);
+    delayMicroseconds(CURRENT_SETTLE_US);
 
-    // mosfet_currents[i] = ads_mosfet_current.getResult_V() * MOSFET_CURRENT_SCALING_FACTOR; // Old
-    mosfet_currents[i] = ads_mosfet_current.getResult_V() * (1.0 / SHUNT_RESISTANCES[i]);
-    total_current += mosfet_currents[i];
-
-    mosfet_temperatures[i] = temperature(ads_mosfet_temperature.getResult_V());
-    total_temperature += mosfet_temperatures[i];
+    byte low = address;
+    byte high = address + 16;
+    mosfet_currents[low] = read_ads8320_volts(ADC_CURRENT_0_CS_PIN) / SHUNT_RESISTANCES[low];
+    mosfet_currents[high] = read_ads8320_volts(ADC_CURRENT_1_CS_PIN) / SHUNT_RESISTANCES[high];
+    total_current += mosfet_currents[low] + mosfet_currents[high];
   }
   mosfet_current_total = total_current;
+}
+
+// Temperatures change slowly and their inputs settle slowly, so each loop reads one mux address
+// (two MOSFETs). Every thermistor is refreshed once every 16 loops.
+void read_mosfet_temperatures() {
+  byte address = next_temperature_address;
+  set_mosfet_mux_address(address);
+  delayMicroseconds(TEMPERATURE_SETTLE_US);
+
+  mosfet_temperatures[address] = temperature(read_ads8320_volts(ADC_TEMPERATURE_0_CS_PIN));
+  mosfet_temperatures[address + 16] = temperature(read_ads8320_volts(ADC_TEMPERATURE_1_CS_PIN));
+  next_temperature_address = (address + 1) % 16;
+
+  float total_temperature = 0.0;
+  for (byte i = 0; i < MOSFET_COUNT; i++) {
+    total_temperature += mosfet_temperatures[i];
+  }
   mosfet_avg_temp = total_temperature / (float) MOSFET_COUNT;
 }
 
-ADS1115_MUX mosfet_channel(int index) {
-  if (index < 16) {
-    return ADS1115_COMP_0_GND;
-  }
-  return ADS1115_COMP_1_GND;
+// One ADS8320 conversion. Pulling CS low starts sampling; the first ~5 clocks are the sample period,
+// then a null bit, then 16 data bits MSB first. Clocking 24 bits leaves the result in bits 17..2.
+uint16_t read_ads8320(int cs_pin) {
+  SPI.beginTransaction(ADS8320_SPI_SETTINGS);
+  digitalWrite(cs_pin, LOW);
+  uint32_t raw = SPI.transfer(0);
+  raw = (raw << 8) | SPI.transfer(0);
+  raw = (raw << 8) | SPI.transfer(0);
+  digitalWrite(cs_pin, HIGH);
+  SPI.endTransaction();
+  return (uint16_t) ((raw >> 2) & 0xFFFF);
 }
 
-int mosfet_index(int index) {
-  if (index < 16) {
-    return index;
-  }
-  return index - 16;
+float read_ads8320_volts(int cs_pin) {
+  return read_ads8320(cs_pin) * (ADS8320_VREF / ADS8320_COUNTS);
 }
 
 void set_mosfet_mux_address(int channel) {
@@ -193,8 +252,11 @@ void set_mosfet_mux_address(int channel) {
 }
 
 float temperature(float voltage) {
-  if (voltage < THERMISTOR_V_MIN_VALID || voltage > THERMISTOR_V_MAX_VALID) {
-    return TEMPERATURE_FAULT; // Open, shorted or saturated: treated as a fault by should_shut_down()
+  if (voltage < THERMISTOR_V_MIN_VALID) {
+    return TEMPERATURE_FAULT; // Open or disconnected: treated as a fault by should_shut_down()
+  }
+  if (voltage > THERMISTOR_V_MAX_VALID) {
+    return TEMPERATURE_SATURATED; // Too hot to measure or shorted: trips the over-temperature check
   }
 
   float resistance = THERMISTOR_R_FIXED * ((THERMISTOR_V_IN / voltage) - 1.0);
@@ -260,7 +322,9 @@ void shut_down() {
 }
 
 void set_current_request(float current) {
-  float targetVoltage = current / total_system_conductance;
+  // Every op-amp holds its shunt at the DAC Control voltage, so total current = V * (sum of 1/R).
+  float controlVoltage = current / total_system_conductance;
+  float targetVoltage = controlVoltage / DAC_DIVIDER_RATIO; // Undo the 4.7k / 120 ohm divider
 
   float rawCounts = (targetVoltage / DAC_V_IN) * (float) DAC_COUNT;
   int dacOutput = round(rawCounts);
