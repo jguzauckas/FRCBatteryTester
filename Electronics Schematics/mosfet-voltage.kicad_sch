@@ -1,0 +1,441 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "afe74a4e-b8c2-47cd-b85c-83b6e6574caa")
+	(paper "A4")
+	(lib_symbols)
+	(hierarchical_label "FET V 2"
+		(shape output)
+		(at 138.43 87.63 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3348cb1c-1c43-48cf-9dd0-e0186d3f880d")
+	)
+	(hierarchical_label "Shunt V 2"
+		(shape input)
+		(at 109.22 87.63 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "9eb09b83-073e-473b-949d-e88e2b8d0c65")
+	)
+	(hierarchical_label "FET V 1"
+		(shape output)
+		(at 2.8448 3.3496 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "b45ff5da-23a8-4903-9770-cd99afb4a74a")
+	)
+	(hierarchical_label "FET V 2"
+		(shape output)
+		(at 138.43 100.33 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "b63f1183-1522-4057-9721-d7555a5a47fe")
+	)
+	(hierarchical_label "FET V 1"
+		(shape output)
+		(at 138.43 74.93 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "b696c2db-3ae6-4223-b689-553e04f69110")
+	)
+	(hierarchical_label "Shunt V 3"
+		(shape input)
+		(at 109.22 100.33 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b93a47b5-b7b4-447d-90c4-2aa00c776327")
+	)
+	(hierarchical_label "Shunt V 1"
+		(shape input)
+		(at 109.22 74.93 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b971769d-9e03-4465-a15c-23a3e8b13e75")
+	)
+	(hierarchical_label "FET V 1"
+		(shape output)
+		(at 0.3048 0.8096 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "ba494fba-02fa-4a9c-b12f-c6c3b762eba0")
+	)
+	(hierarchical_label "FET V 3"
+		(shape output)
+		(at 138.43 113.03 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c6c30df6-8e16-411b-81ba-3e09b50d11be")
+	)
+	(hierarchical_label "FET V 1"
+		(shape output)
+		(at 5.3848 5.8896 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "cbfe7df5-b62a-412a-bf7a-986a83d7642f")
+	)
+	(hierarchical_label "Shunt V 4"
+		(shape input)
+		(at 109.22 113.03 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "eeab08f4-9bd1-4ce9-9b9c-48592c37912b")
+	)
+	(sheet
+		(at 109.22 97.79)
+		(size 29.21 5.08)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "2a079462-a9c1-4d1e-8a61-a93a8bc74d7d")
+		(property "Sheetname" "Single Monitor2"
+			(at 109.22 97.0784 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "single-monitor.kicad_sch"
+			(at 109.22 103.4546 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "Shunt V" input
+			(at 109.22 100.33 180)
+			(uuid "628d3d38-7397-4f4c-954c-3db7fbd56eb7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "FET V" output
+			(at 138.43 100.33 0)
+			(uuid "56c938bb-846d-4dd3-92b7-59d9605a5fc5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/de3ded5e-a912-4256-90ac-18915ac5b249"
+					(page "4")
+				)
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/65612886-62ae-4b07-a643-61344389e557"
+					(page "14")
+				)
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/174d72b1-e87d-48b7-a36f-b5554de952b3"
+					(page "26")
+				)
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/c58e2757-abf4-45d5-af8b-e8cf40c4ce9d"
+					(page "36")
+				)
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/e0cb52ea-a7a4-417e-a182-cc7a2a626ab7"
+					(page "46")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 109.22 72.39)
+		(size 29.21 5.08)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "3eb77317-24a3-4bf0-876a-d4098aad9c70")
+		(property "Sheetname" "Single Monitor"
+			(at 109.22 71.6784 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "single-monitor.kicad_sch"
+			(at 109.22 78.0546 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "Shunt V" input
+			(at 109.22 74.93 180)
+			(uuid "563429f3-9d2c-4cd5-89e5-9ebef0dc1be9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "FET V" output
+			(at 138.43 74.93 0)
+			(uuid "cf62078a-82e6-45df-8c45-7d8b6c2947df")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/de3ded5e-a912-4256-90ac-18915ac5b249"
+					(page "5")
+				)
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/65612886-62ae-4b07-a643-61344389e557"
+					(page "12")
+				)
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/174d72b1-e87d-48b7-a36f-b5554de952b3"
+					(page "24")
+				)
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/c58e2757-abf4-45d5-af8b-e8cf40c4ce9d"
+					(page "34")
+				)
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/e0cb52ea-a7a4-417e-a182-cc7a2a626ab7"
+					(page "44")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 109.22 85.09)
+		(size 29.21 5.08)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "5eed3a3e-0827-4ae5-8487-b6f12f2f44fd")
+		(property "Sheetname" "Single Monitor1"
+			(at 109.22 84.3784 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "single-monitor.kicad_sch"
+			(at 109.22 90.7546 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "Shunt V" input
+			(at 109.22 87.63 180)
+			(uuid "f8039774-51ea-4b3a-a8d8-16db42847a07")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "FET V" output
+			(at 138.43 87.63 0)
+			(uuid "e4c9b7f3-eb36-404e-9edf-222b3a5a1938")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/de3ded5e-a912-4256-90ac-18915ac5b249"
+					(page "3")
+				)
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/65612886-62ae-4b07-a643-61344389e557"
+					(page "13")
+				)
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/174d72b1-e87d-48b7-a36f-b5554de952b3"
+					(page "25")
+				)
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/c58e2757-abf4-45d5-af8b-e8cf40c4ce9d"
+					(page "35")
+				)
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/e0cb52ea-a7a4-417e-a182-cc7a2a626ab7"
+					(page "45")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 109.22 110.49)
+		(size 29.21 5.08)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "bf590243-0013-455a-9b3b-933efec0319b")
+		(property "Sheetname" "Single Monitor3"
+			(at 109.22 109.7784 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "single-monitor.kicad_sch"
+			(at 109.22 116.1546 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "Shunt V" input
+			(at 109.22 113.03 180)
+			(uuid "87e09f1d-dbb7-4561-a8c8-05cf9c9db712")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "FET V" output
+			(at 138.43 113.03 0)
+			(uuid "ae85f54e-c207-4f51-a7e6-0a974b7ab3fd")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/de3ded5e-a912-4256-90ac-18915ac5b249"
+					(page "6")
+				)
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/65612886-62ae-4b07-a643-61344389e557"
+					(page "15")
+				)
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/174d72b1-e87d-48b7-a36f-b5554de952b3"
+					(page "27")
+				)
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/c58e2757-abf4-45d5-af8b-e8cf40c4ce9d"
+					(page "37")
+				)
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82/e0cb52ea-a7a4-417e-a182-cc7a2a626ab7"
+					(page "47")
+				)
+			)
+		)
+	)
+)

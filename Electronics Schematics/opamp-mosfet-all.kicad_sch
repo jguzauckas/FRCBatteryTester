@@ -1,0 +1,1669 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "6811e0a9-7c0d-4ea0-bf6f-84c0dc40e70a")
+	(paper "A4")
+	(lib_symbols)
+	(wire
+		(pts
+			(xy 90.17 110.49) (xy 92.71 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0292850a-80bb-4699-a4df-86fadf3a51cc")
+	)
+	(wire
+		(pts
+			(xy 90.17 45.72) (xy 92.71 45.72)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0ec31426-e814-49a2-aa60-ab1946b705f1")
+	)
+	(wire
+		(pts
+			(xy 90.17 121.92) (xy 92.71 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1ce83434-130a-473f-90e5-18d5afe52c31")
+	)
+	(wire
+		(pts
+			(xy 90.17 86.36) (xy 92.71 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1ebc79d8-3f79-49ad-a225-3f70a0dbd418")
+	)
+	(wire
+		(pts
+			(xy 25.4 80.01) (xy 38.1 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "23512ed7-d9fa-4d1c-9aec-18574e834765")
+	)
+	(wire
+		(pts
+			(xy 90.17 66.04) (xy 92.71 66.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "253c3b19-1078-46d0-a3b5-3c15dc726657")
+	)
+	(wire
+		(pts
+			(xy 90.17 93.98) (xy 92.71 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "254a9635-bb08-4082-89cc-d94c04309717")
+	)
+	(wire
+		(pts
+			(xy 90.17 97.79) (xy 92.71 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4141a188-90da-427d-9c6b-e34f161188d8")
+	)
+	(wire
+		(pts
+			(xy 90.17 118.11) (xy 92.71 118.11)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "660545c2-2ba6-4297-8198-d5ad9a05e1de")
+	)
+	(wire
+		(pts
+			(xy 45.72 44.45) (xy 60.96 44.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8a84477e-dddd-4e8d-a8d4-fc28f2482c83")
+	)
+	(wire
+		(pts
+			(xy 90.17 142.24) (xy 92.71 142.24)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9231f31b-a54b-45ce-b68c-97b0e07e6f01")
+	)
+	(wire
+		(pts
+			(xy 90.17 114.3) (xy 92.71 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "973488bd-13db-4b12-a913-370f08d83c4f")
+	)
+	(wire
+		(pts
+			(xy 90.17 69.85) (xy 92.71 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9b3b13d0-594e-4611-8b27-7ce47abd5345")
+	)
+	(wire
+		(pts
+			(xy 45.72 68.58) (xy 60.96 68.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a0900982-48b6-4988-8f08-cdb420223460")
+	)
+	(wire
+		(pts
+			(xy 90.17 134.62) (xy 92.71 134.62)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a11d65ec-5c59-440a-870f-c4dc9763f547")
+	)
+	(wire
+		(pts
+			(xy 90.17 62.23) (xy 92.71 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "aeea3150-5767-4744-9e21-c7145eef621d")
+	)
+	(wire
+		(pts
+			(xy 90.17 49.53) (xy 92.71 49.53)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b06bc4d1-2051-4229-ba81-7ea0658f9b1e")
+	)
+	(wire
+		(pts
+			(xy 45.72 116.84) (xy 60.96 116.84)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b62f3f09-2cff-49a2-8de2-7fa8a954497c")
+	)
+	(wire
+		(pts
+			(xy 90.17 41.91) (xy 92.71 41.91)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b73303e1-5942-44a2-887d-7a123f90c911")
+	)
+	(wire
+		(pts
+			(xy 45.72 92.71) (xy 60.96 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c9628ef5-e9f0-4ff3-9b61-1f809ac64af8")
+	)
+	(wire
+		(pts
+			(xy 90.17 138.43) (xy 92.71 138.43)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ca6e6600-580a-4e21-8b59-7ce9468cc3a2")
+	)
+	(wire
+		(pts
+			(xy 90.17 73.66) (xy 92.71 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cc70bc29-d529-485a-be10-1a2a70ec0233")
+	)
+	(wire
+		(pts
+			(xy 90.17 38.1) (xy 92.71 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d5e432f3-ea99-484d-89d2-97078cb4adda")
+	)
+	(wire
+		(pts
+			(xy 90.17 90.17) (xy 92.71 90.17)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d7b61104-22a4-48ad-ba9b-aba1d3d0b665")
+	)
+	(wire
+		(pts
+			(xy 45.72 140.97) (xy 60.96 140.97)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "db38f184-670f-4740-a7c3-e8754a2b63dc")
+	)
+	(wire
+		(pts
+			(xy 90.17 146.05) (xy 92.71 146.05)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f348c23a-7987-43a0-b4f1-234dc5de5ab2")
+	)
+	(label "DAC Control"
+		(at 45.72 92.71 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "1bc10679-7c57-4cba-a572-4c7ee4b0d9dd")
+	)
+	(label "DAC Control"
+		(at 45.72 116.84 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "207fb6aa-274f-4d11-9fc1-e23ac2344c12")
+	)
+	(label "DAC Control"
+		(at 25.4 80.01 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "336992b4-025d-4628-8679-bece2096486b")
+	)
+	(label "DAC Control"
+		(at 45.72 44.45 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "650101d6-99a2-41ee-9fc8-663a1aa5b369")
+	)
+	(label "DAC Control"
+		(at 45.72 68.58 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "83318c23-8b4c-4d8e-8cf9-89ce7914aa9b")
+	)
+	(label "DAC Control"
+		(at 45.72 140.97 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e77417b2-aa43-485a-a55d-2551f57d876f")
+	)
+	(hierarchical_label "FET V 5"
+		(shape output)
+		(at 123.19 62.23 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "078fbedc-4bac-4b34-94fa-c5a5f8bc2984")
+	)
+	(hierarchical_label "FET V 1"
+		(shape output)
+		(at 123.19 38.1 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "0eb2083d-dc5c-4703-94e1-319b02e80b2d")
+	)
+	(hierarchical_label "DAC Control"
+		(shape input)
+		(at 38.1 80.01 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "16a785c4-3e42-4a57-9392-4efe62340772")
+	)
+	(hierarchical_label "FET V 17"
+		(shape output)
+		(at 123.19 134.62 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "17d26790-7dfe-404f-a1c7-41aeeee5fde3")
+	)
+	(hierarchical_label "FET V 6"
+		(shape output)
+		(at 123.19 66.04 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "1cd31721-88a4-4c67-8abb-99c7aca9596b")
+	)
+	(hierarchical_label "FET V 9"
+		(shape output)
+		(at 123.19 86.36 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "2b68c763-b723-43e7-80d7-8eb9de832f70")
+	)
+	(hierarchical_label "FET V 12"
+		(shape output)
+		(at 123.19 97.79 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "35a73464-abe3-48a6-88b1-3e2546aeb0df")
+	)
+	(hierarchical_label "FET V 4"
+		(shape output)
+		(at 123.19 49.53 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3a75db0d-8437-4dd1-af79-181ce67a2a5f")
+	)
+	(hierarchical_label "FET V 3"
+		(shape output)
+		(at 123.19 45.72 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3ac87cfb-2a05-46c1-88e1-05914473949e")
+	)
+	(hierarchical_label "FET V 8"
+		(shape output)
+		(at 123.19 73.66 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3d81de23-a369-4409-9255-931f66b784d9")
+	)
+	(hierarchical_label "FET V 13"
+		(shape output)
+		(at 123.19 110.49 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "502e67b5-c8e2-4ad1-ad56-fcf3f17633ba")
+	)
+	(hierarchical_label "FET V 16"
+		(shape output)
+		(at 123.19 121.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "54910170-b454-4a26-802d-0c9b0c7b51df")
+	)
+	(hierarchical_label "FET V 2"
+		(shape output)
+		(at 123.19 41.91 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "599452f0-c4ba-455a-81f8-e6136e742adc")
+	)
+	(hierarchical_label "FET V 19"
+		(shape output)
+		(at 123.19 142.24 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "5e31bc9d-62c5-4167-b96b-c0e526e37adc")
+	)
+	(hierarchical_label "FET V 14"
+		(shape output)
+		(at 123.19 114.3 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "7fdfb9ae-73aa-4606-976c-011d60725cf3")
+	)
+	(hierarchical_label "FET V 11"
+		(shape output)
+		(at 123.19 93.98 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "9f0ea312-66a0-4f3f-a42e-8c6ec180c6bc")
+	)
+	(hierarchical_label "FET V 18"
+		(shape output)
+		(at 123.19 138.43 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "b916dc95-051d-4ed2-9768-9edcd273fbce")
+	)
+	(hierarchical_label "FET V 20"
+		(shape output)
+		(at 123.19 146.05 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "bd79006b-b6b6-4f84-8946-21dd47ead6cd")
+	)
+	(hierarchical_label "FET V 7"
+		(shape output)
+		(at 123.19 69.85 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c620c5cd-981a-4aae-9b5b-006f656e96dc")
+	)
+	(hierarchical_label "FET V 15"
+		(shape output)
+		(at 123.19 118.11 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "e8b733eb-f806-4686-8860-3d2142947b83")
+	)
+	(hierarchical_label "FET V 10"
+		(shape output)
+		(at 123.19 90.17 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "f93c0906-8449-4671-99b7-cdf6b4965206")
+	)
+	(sheet
+		(at 60.96 35.56)
+		(size 29.21 16.51)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "0c2f067c-bd51-45a8-81b4-b52da63cafa2")
+		(property "Sheetname" "OpAmp-MOSFET Circuit"
+			(at 60.96 34.8484 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "opamp-mosfet.kicad_sch"
+			(at 60.96 52.6546 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "DAC Control" input
+			(at 60.96 44.45 180)
+			(uuid "f8632baa-8ec5-48c8-8894-0654f11bae8d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 1" output
+			(at 90.17 38.1 0)
+			(uuid "133b68c3-e32b-4c82-b9b8-e80aea3fd676")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 2" output
+			(at 90.17 41.91 0)
+			(uuid "895dc23c-c596-4136-be21-2143cf3edbb6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 3" output
+			(at 90.17 45.72 0)
+			(uuid "e77fb44d-3477-43cb-996c-94cfe9f1f497")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 4" output
+			(at 90.17 49.53 0)
+			(uuid "d74d7b19-86b7-49a9-aeee-084c3658c574")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 92.71 83.82)
+		(size 30.48 16.51)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "174d72b1-e87d-48b7-a36f-b5554de952b3")
+		(property "Sheetname" "MOSFET Voltage Monitor2"
+			(at 92.71 83.1084 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "mosfet-voltage.kicad_sch"
+			(at 92.71 100.9146 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "FET V 1" output
+			(at 123.19 86.36 0)
+			(uuid "732dc2bf-1da2-4637-965d-ef28582206c0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FET V 2" output
+			(at 123.19 90.17 0)
+			(uuid "2a8b0149-27f3-4603-9db0-5542902bf475")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FET V 3" output
+			(at 123.19 93.98 0)
+			(uuid "f0f061f4-6e9d-4764-88ef-14ae58a91f46")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FET V 4" output
+			(at 123.19 97.79 0)
+			(uuid "c4cdb6f5-6ac7-4264-a3b5-59ffc2c58b40")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 1" input
+			(at 92.71 86.36 180)
+			(uuid "e2a70428-4667-4da0-91f5-7d4777941cc3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 2" input
+			(at 92.71 90.17 180)
+			(uuid "f90cf985-98ed-4c2e-8824-85aa86dc0df6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 3" input
+			(at 92.71 93.98 180)
+			(uuid "be867f84-da60-41b2-aed9-a91d6b380d8f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 4" input
+			(at 92.71 97.79 180)
+			(uuid "46e868ea-45a6-4be7-b4d2-4727af45a824")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82"
+					(page "23")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 60.96 132.08)
+		(size 29.21 16.51)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "4ebe3963-cda6-467d-b7b8-6d9234b02280")
+		(property "Sheetname" "OpAmp-MOSFET Circuit4"
+			(at 60.96 131.3684 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "opamp-mosfet.kicad_sch"
+			(at 60.96 149.1746 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "DAC Control" input
+			(at 60.96 140.97 180)
+			(uuid "7c94e1ef-95ef-432f-9e5c-cfb0cfe390fa")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 1" output
+			(at 90.17 134.62 0)
+			(uuid "d03cef63-b5da-4739-bef1-8f190254f4ca")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 2" output
+			(at 90.17 138.43 0)
+			(uuid "7096ee1a-5221-40c2-b1ef-e5f1b5e7087d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 3" output
+			(at 90.17 142.24 0)
+			(uuid "c61c50be-2cba-4d03-8deb-0e23d4749d98")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 4" output
+			(at 90.17 146.05 0)
+			(uuid "7b52eae7-5088-468d-bd26-61954462e659")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82"
+					(page "48")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 92.71 59.69)
+		(size 30.48 16.51)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "65612886-62ae-4b07-a643-61344389e557")
+		(property "Sheetname" "MOSFET Voltage Monitor1"
+			(at 92.71 58.9784 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "mosfet-voltage.kicad_sch"
+			(at 92.71 76.7846 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "FET V 1" output
+			(at 123.19 62.23 0)
+			(uuid "ec33d46b-d08a-4cbf-9d97-b0ce8f20bb0a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FET V 2" output
+			(at 123.19 66.04 0)
+			(uuid "3492c5c7-8da5-4043-b9fb-58d44118f017")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FET V 3" output
+			(at 123.19 69.85 0)
+			(uuid "f5c4da5c-a488-4fea-8f5d-a2a5d1c0240b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FET V 4" output
+			(at 123.19 73.66 0)
+			(uuid "0f01364d-87c3-4e14-89d5-fbf8a267c11e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 1" input
+			(at 92.71 62.23 180)
+			(uuid "e8c6de75-7791-4ae3-b105-8c04a543d45f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 2" input
+			(at 92.71 66.04 180)
+			(uuid "8696cc90-8336-4e0c-96c0-d6fb223cb9f3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 3" input
+			(at 92.71 69.85 180)
+			(uuid "5ec55f02-86be-4c14-ada6-5c040bd5fa87")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 4" input
+			(at 92.71 73.66 180)
+			(uuid "9839b979-5185-4f2f-a468-02180260452d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82"
+					(page "11")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 60.96 107.95)
+		(size 29.21 16.51)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "6b76d0b6-4347-4dd1-b138-973980b5c2d9")
+		(property "Sheetname" "OpAmp-MOSFET Circuit3"
+			(at 60.96 107.2384 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "opamp-mosfet.kicad_sch"
+			(at 60.96 125.0446 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "DAC Control" input
+			(at 60.96 116.84 180)
+			(uuid "6a34a0b2-1df9-4a7f-9c44-cd5b252c54e6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 1" output
+			(at 90.17 110.49 0)
+			(uuid "6e9dbe42-3647-47f8-a21a-e9fc2615b045")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 2" output
+			(at 90.17 114.3 0)
+			(uuid "933f3078-c0eb-4ff3-9653-775cbea1bbb6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 3" output
+			(at 90.17 118.11 0)
+			(uuid "664e17b3-20d8-4a2f-98e4-d38f59a339e8")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 4" output
+			(at 90.17 121.92 0)
+			(uuid "183d216d-bb05-43a9-b53e-cb3bac16e7c6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82"
+					(page "38")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 60.96 59.69)
+		(size 29.21 16.51)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "89ced731-ddb3-43b9-9043-bf797d4f3f57")
+		(property "Sheetname" "OpAmp-MOSFET Circuit1"
+			(at 60.96 58.9784 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "opamp-mosfet.kicad_sch"
+			(at 60.96 76.7846 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "DAC Control" input
+			(at 60.96 68.58 180)
+			(uuid "d1d011cc-aa14-4542-8229-d904f94c2124")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 1" output
+			(at 90.17 62.23 0)
+			(uuid "98dadde8-6c8b-49de-ba6c-61dac525d811")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 2" output
+			(at 90.17 66.04 0)
+			(uuid "4ec8b75a-cb59-453c-9f10-7ae6f31e94a7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 3" output
+			(at 90.17 69.85 0)
+			(uuid "6712cc59-e315-48c1-98bc-f31e093a3c02")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 4" output
+			(at 90.17 73.66 0)
+			(uuid "46409a09-e216-4fb7-9864-6010cf8ab7f6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82"
+					(page "18")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 60.96 83.82)
+		(size 29.21 16.51)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "c19c6ad0-4c0c-4e28-aca9-ed2ac6d0e383")
+		(property "Sheetname" "OpAmp-MOSFET Circuit2"
+			(at 60.96 83.1084 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "opamp-mosfet.kicad_sch"
+			(at 60.96 100.9146 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "DAC Control" input
+			(at 60.96 92.71 180)
+			(uuid "4dcb779b-bc14-40e3-a965-c4818a770897")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 1" output
+			(at 90.17 86.36 0)
+			(uuid "24a8c2a6-6d65-4437-b2ca-cd70e565a5c6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 2" output
+			(at 90.17 90.17 0)
+			(uuid "850d3c37-9569-40cb-a62f-20782c957c60")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 3" output
+			(at 90.17 93.98 0)
+			(uuid "a5bd3faf-3ef8-4797-a4a2-d7daff6f5fa3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 4" output
+			(at 90.17 97.79 0)
+			(uuid "c1b6ce8e-fbe9-4a5b-8f70-f600a9e6ac98")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82"
+					(page "28")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 92.71 107.95)
+		(size 30.48 16.51)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "c58e2757-abf4-45d5-af8b-e8cf40c4ce9d")
+		(property "Sheetname" "MOSFET Voltage Monitor3"
+			(at 92.71 107.2384 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "mosfet-voltage.kicad_sch"
+			(at 92.71 125.0446 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "FET V 1" output
+			(at 123.19 110.49 0)
+			(uuid "1740307c-f3ac-4c38-b2ca-9f1c66f9b529")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FET V 2" output
+			(at 123.19 114.3 0)
+			(uuid "a3347c61-557d-491c-af5f-2ec481ed74a5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FET V 3" output
+			(at 123.19 118.11 0)
+			(uuid "912535bc-0ed3-4412-a55c-ea445389f80c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FET V 4" output
+			(at 123.19 121.92 0)
+			(uuid "783df597-94c0-4b6e-abe1-50e8d176119a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 1" input
+			(at 92.71 110.49 180)
+			(uuid "448001e0-422d-4305-bdc5-cf352bb0e0ed")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 2" input
+			(at 92.71 114.3 180)
+			(uuid "683339a9-e51a-496d-bc5b-d84e5e57b5f1")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 3" input
+			(at 92.71 118.11 180)
+			(uuid "690165be-f830-4e7e-a683-fe9110f10a85")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 4" input
+			(at 92.71 121.92 180)
+			(uuid "0ec663a4-1cfd-4942-b738-d7ecf0aa2e9b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82"
+					(page "33")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 92.71 35.56)
+		(size 30.48 16.51)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "de3ded5e-a912-4256-90ac-18915ac5b249")
+		(property "Sheetname" "MOSFET Voltage Monitor"
+			(at 92.71 34.8484 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "mosfet-voltage.kicad_sch"
+			(at 92.71 52.6546 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "FET V 1" output
+			(at 123.19 38.1 0)
+			(uuid "9d477162-fe2b-4713-9cd7-dcb6a15c78fa")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FET V 2" output
+			(at 123.19 41.91 0)
+			(uuid "88b52b7c-fc73-4025-a9dc-6fa19fa8697a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FET V 3" output
+			(at 123.19 45.72 0)
+			(uuid "3f4da918-151e-4841-a460-ea450d125871")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FET V 4" output
+			(at 123.19 49.53 0)
+			(uuid "43cc2efe-6c74-4124-b88d-913d199b3cf0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 1" input
+			(at 92.71 38.1 180)
+			(uuid "d4dca47d-1adf-41be-9070-fc09a3a753fe")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 2" input
+			(at 92.71 41.91 180)
+			(uuid "28326d22-b7ff-48e0-a257-28c7fca94986")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 3" input
+			(at 92.71 45.72 180)
+			(uuid "7055e8f6-f221-40b5-8763-69890f01af6d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 4" input
+			(at 92.71 49.53 180)
+			(uuid "9909640d-88f2-44be-82d0-78e26796ec45")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 92.71 132.08)
+		(size 30.48 16.51)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "e0cb52ea-a7a4-417e-a182-cc7a2a626ab7")
+		(property "Sheetname" "MOSFET Voltage Monitor4"
+			(at 92.71 131.3684 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "mosfet-voltage.kicad_sch"
+			(at 92.71 149.1746 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "FET V 1" output
+			(at 123.19 134.62 0)
+			(uuid "cfcfdec4-acc7-480c-bece-93e76e9245ec")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FET V 2" output
+			(at 123.19 138.43 0)
+			(uuid "473e1897-b4ef-49f1-8fe8-9db52c59fc05")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FET V 3" output
+			(at 123.19 142.24 0)
+			(uuid "6438607a-15e4-4ff6-8f36-d773626a5258")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "FET V 4" output
+			(at 123.19 146.05 0)
+			(uuid "0e0c7c84-9672-4512-b7df-f37ad689bba5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "Shunt V 1" input
+			(at 92.71 134.62 180)
+			(uuid "c5ec44ae-51e5-463c-85f4-7b394a8e63fc")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 2" input
+			(at 92.71 138.43 180)
+			(uuid "d078ad67-5356-485f-a1e0-e1975d1b28bb")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 3" input
+			(at 92.71 142.24 180)
+			(uuid "4c6e2348-db8a-454a-9a3a-21f066155b09")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Shunt V 4" input
+			(at 92.71 146.05 180)
+			(uuid "140ef7f0-8ac7-47e2-8838-a0d788f5d666")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/2375bcf5-a64b-401b-b75d-b25227577f82"
+					(page "43")
+				)
+			)
+		)
+	)
+)
