@@ -254,9 +254,9 @@ void shut_down() {
   digitalWrite(E_STOP_PIN, HIGH);
 
   while (true) {
-      Serial.println("ERROR");
-      delay(1000);
-    }
+    Serial.println("ERROR");
+    delay(1000);
+  }
 }
 
 void set_current_request(float current) {
