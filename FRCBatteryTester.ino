@@ -39,15 +39,16 @@ ADS1115_WE ads_battery_voltage = ADS1115_WE(ADS_BATTERY_VOLTAGE_I2C_ADDRESS);
 const float ROBOT_BATTERY_V_SCALING_FACTOR = (12000.0 + 4700.0) / 4700.0; // 12k top resistor (10k + 1k + 1k) and 4.7k bottom resistor
 const float ROBOT_BATTERY_I_SCALING_FACTOR = 400 / 0.625; // 400 amps across 0.625 volt range
 
-const float THERMISTOR_R_FIXED = 10000.0; // Fixed resistor for voltage divider
+const float THERMISTOR_R_FIXED = 4700.0; // Fixed (bottom) resistor for voltage divider, 4.7k so 85 C stays under the 4.096 V reference
 const float THERMISTOR_V_IN = 5.0; // Voltage going into Thermistor
 const float THERMISTOR_R_NOMINAL = 10000.0; // Thermistors rated resistance at base temperature
 const float THERMISTOR_T_NOMINAL = 25.0 + 273.15; // 25 degrees Celsius converted to Kelvin
 const float THERMISTOR_BETA = 3988.0; // Rated Beta of Thermistor
 const float THERMISTOR_V_MIN_VALID = 0.05; // Below this the thermistor is open/disconnected
-// The ADS8320 tops out at 4.096 V but the divider runs from 5 V, so readings saturate at about 63 C.
+// The ADS8320 tops out at 4.096 V but the divider runs from 5 V. With the 4.7k bottom resistor, 85 C reads
+// about 4.08 V, so readings above THERMISTOR_V_MAX_VALID (about 84 C on a 5.0 V rail) count as saturated.
 // A saturated reading (too hot to measure, or a shorted thermistor) is reported as TEMPERATURE_SATURATED,
-// which trips the 85 C limit, so in practice the tester shuts down at about 61 C until the divider changes.
+// which trips the over-temperature shutdown.
 const float THERMISTOR_V_MAX_VALID = ADS8320_VREF - 0.05;
 const float TEMPERATURE_FAULT = -999.0; // Open or disconnected thermistor
 const float TEMPERATURE_SATURATED = 999.0; // Above the measurable range
