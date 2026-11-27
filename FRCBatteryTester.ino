@@ -98,7 +98,15 @@ const int DAC_COUNT = 4095; // DAC resolution is 12 bits (2^12 -1)
 // DAC Control (buffered DAC output, 0-5 V) feeds a 47k / 1.2k divider at each channel's op-amp + input,
 // referenced to that channel's shunt bottom, so full scale per channel is about 0.124 V (about 13 A per MOSFET).
 const float DAC_DIVIDER_RATIO = 1200.0 / (47000.0 + 1200.0);
-const float MAX_CURRENT_REQUEST = 10.0 * 32; // 10 A average per MOSFET, under the 11 A per-MOSFET trip
+const float MAX_CURRENT_REQUEST = 10.0 * 32; // 10 A average per MOSFET
+
+// Over-current trips. At a full 320 A request the channels don't share evenly: channel 0's 9.3 mohm shunt
+// alone puts it ~2% above average (~10.2 A), and LM324A offset (up to 3 mV, ~0.3 A), divider tolerance,
+// the 0.1 mohm rounding of the measured shunts and the outer gain loop (if a channel drops out) can each
+// add a few tenths more. An 11 A trip could fire with nothing wrong, so it's 12 A. A real failure (a
+// shorted MOSFET) is tens to hundreds of amps, so it still trips immediately.
+const float MOSFET_CURRENT_TRIP_A = 12.0;
+const float BATTERY_CURRENT_TRIP_A = MAX_CURRENT_REQUEST * 1.1; // 352 A, from the HASS
 
 // Outer current loop. The DAC uses the 5 V rail as its reference and the 47k / 1.2k dividers have tolerance,
 // so the commanded current is off by a few percent. Each loop compares the total measured across all 32
@@ -482,7 +490,7 @@ void log_data() {
 }
 
 bool should_shut_down() {
-  if (robot_battery_i >= (MOSFET_COUNT * 11.0)) {
+  if (robot_battery_i >= BATTERY_CURRENT_TRIP_A) {
     return true;
   }
   if (robot_battery_v < BATTERY_CUTOFF_V) {
@@ -496,7 +504,7 @@ bool should_shut_down() {
   }
 
   for (byte i = 0; i < MOSFET_COUNT; i++) {
-    if (mosfet_currents[i] > 11.0) {
+    if (mosfet_currents[i] > MOSFET_CURRENT_TRIP_A) {
       return true;
     }
     if (mosfet_temperatures[i] > 60.0) {
