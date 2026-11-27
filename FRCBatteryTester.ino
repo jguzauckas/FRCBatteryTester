@@ -102,7 +102,7 @@ const float DAC_DIVIDER_RATIO = 1200.0 / (47000.0 + 1200.0);
 const float MAX_CURRENT_REQUEST = 10.0 * 32; // 10 A average per MOSFET
 
 // Over-current trips. At a full 320 A request the channels don't share evenly: channel 0's 9.3 mohm shunt
-// alone puts it ~2% above average (~10.2 A), and LM324A offset (up to 3 mV, ~0.3 A), divider tolerance,
+// alone puts it ~2% above average (~10.2 A), op-amp offset (small with the OPA4197), divider tolerance,
 // the 0.1 mohm rounding of the measured shunts and the outer gain loop (if a channel drops out) can each
 // add a few tenths more. An 11 A trip could fire with nothing wrong, so it's 12 A. A real failure (a
 // shorted MOSFET) is tens to hundreds of amps, so it still trips immediately.
@@ -113,8 +113,9 @@ const float BATTERY_CURRENT_TRIP_A = MAX_CURRENT_REQUEST * 1.1; // 352 A, from t
 // so the commanded current is off by a few percent. Each loop compares the total measured across all 32
 // shunts with what was asked for last loop and nudges a gain correction applied to the DAC command.
 // Correcting gain (not adding amps) keeps the correction right as the request changes during playback.
-const float GAIN_LEARN_MIN_CURRENT = 5.0; // A total (~1 A per MOSFET). Below this, op-amp offsets (up to
-                                          // ~0.3 A per channel) would skew the estimate, so the gain isn't updated
+const float GAIN_LEARN_MIN_CURRENT = 5.0; // A total (~0.16 A per MOSFET). OPA4197 offset (up to 0.25 mV,
+                                         // ~0.03 A per channel) would skew the estimate below this, so the gain
+                                         // isn't updated
 const float GAIN_LEARN_RATE = 0.5; // Fraction of the measured error removed each loop (stable for any loop time)
 const float GAIN_CORRECTION_MIN = 0.85;
 const float GAIN_CORRECTION_MAX = 1.15; // Limits how hard the other channels get pushed if some drop out
