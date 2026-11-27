@@ -44,7 +44,8 @@ const unsigned int TEMPERATURE_SETTLE_US = 3000; // ~9 time constants
 // both ends must match.
 //   H,<field names...>   header: sent at startup and whenever the host sends "H"
 //   D,<values...>        one data line per loop, in header order
-//   anything else        events and faults (WARNING..., ..._FAULT:..., ERROR)
+//   anything else        events and faults: WARNING:..., <NAME>:<details> when a fault trips, then
+//                        ERROR:<NAME> once a second while latched
 const unsigned long SERIAL_BAUD = 115200;
 
 const unsigned long COMMAND_TIMEOUT_MS = 1000; // Drop the load to 0 A if no command arrives for this long
@@ -220,7 +221,7 @@ void setup() {
   // stay latched until someone presses reset or power-cycles the tester (both clear this flag).
   if (R_SYSTEM->RSTSR1_b.WDTRF) {
     Serial.println("WATCHDOG_RESET_FAULT:sketch hung, press reset to restart");
-    shut_down();
+    shut_down("WATCHDOG_RESET_FAULT");
   }
 
   delay(1000); // Give hardware time to stabilize
@@ -240,17 +241,18 @@ void setup() {
   if (robot_battery_v < BATTERY_START_MIN_V) {
     Serial.print("BATT_TOO_LOW_TO_START:");
     Serial.println(robot_battery_v, 2);
-    shut_down();
+    shut_down("BATT_TOO_LOW_TO_START");
   }
-  if (should_shut_down()) {
-    shut_down();
+  const char *fault = should_shut_down();
+  if (fault != nullptr) {
+    shut_down(fault);
   }
 
   // Start the watchdog just before the battery is connected. Everything above runs with the contactor
   // open, so a hang there is harmless. Refuse to connect the battery without it.
   if (!WDT.begin(WATCHDOG_TIMEOUT_MS)) {
     Serial.println("WATCHDOG_START_FAULT");
-    shut_down();
+    shut_down("WATCHDOG_START_FAULT");
   }
   watchdog_running = true;
 
@@ -293,8 +295,9 @@ void loop() {
   update_gain_correction();
   set_current_request(current_requested); // Use this to control the voltage of the DAC for mosfet control.
 
-  if (should_shut_down()) {
-    shut_down();
+  const char *fault = should_shut_down();
+  if (fault != nullptr) {
+    shut_down(fault);
   }
 }
 
@@ -323,7 +326,8 @@ void read_commands() {
 
 void handle_command(const char *command) {
   if (strcmp(command, "ESTOP") == 0) {
-    shut_down();
+    Serial.println("ESTOP_COMMAND:");
+    shut_down("ESTOP_COMMAND");
   } else if (strcmp(command, "H") == 0) {
     print_log_header();
   } else if (command[0] == 'A') {
@@ -350,7 +354,7 @@ void calibrate_battery_current_zero() {
   if (fabs(battery_i_zero_v) > BATTERY_I_ZERO_MAX_V) {
     Serial.print("BATT_I_ZERO_FAULT:");
     Serial.println(battery_i_zero_v, 4);
-    shut_down(); // Can't trust the current sensor, so never connect the battery
+    shut_down("BATT_I_ZERO_FAULT"); // Can't trust the current sensor, so never connect the battery
   }
 }
 
@@ -362,7 +366,7 @@ void read_5v_rail() {
   if (v < V5_RAIL_MIN || v > V5_RAIL_MAX) {
     Serial.print("V5_RAIL_FAULT:");
     Serial.println(v, 3);
-    shut_down(); // Every sensor and the thermistor math depend on this rail
+    shut_down("V5_RAIL_FAULT"); // Every sensor and the thermistor math depend on this rail
   }
   thermistor_v_in = v;
 }
@@ -489,15 +493,21 @@ void log_data() {
   Serial.println();
 }
 
-bool should_shut_down() {
+// Prints a "<NAME>:<details>" line and returns NAME for the first limit that's exceeded, or nullptr if
+// everything is in range. The latched ERROR lines repeat NAME, so a host that connects late still sees why.
+const char *should_shut_down() {
   if (robot_battery_i >= BATTERY_CURRENT_TRIP_A) {
-    return true;
+    Serial.print("BATT_OVERCURRENT_FAULT:");
+    Serial.println(robot_battery_i, 1);
+    return "BATT_OVERCURRENT_FAULT";
   }
   if (robot_battery_v < BATTERY_CUTOFF_V) {
     if (battery_low_since_ms == 0) {
       battery_low_since_ms = millis() | 1; // | 1 so a millis() of exactly 0 doesn't read as "not low"
     } else if (millis() - battery_low_since_ms >= BATTERY_CUTOFF_MS) {
-      return true;
+      Serial.print("BATT_LOW_FAULT:");
+      Serial.println(robot_battery_v, 2);
+      return "BATT_LOW_FAULT";
     }
   } else {
     battery_low_since_ms = 0;
@@ -505,19 +515,31 @@ bool should_shut_down() {
 
   for (byte i = 0; i < MOSFET_COUNT; i++) {
     if (mosfet_currents[i] > MOSFET_CURRENT_TRIP_A) {
-      return true;
+      print_channel_fault("FET_OVERCURRENT_FAULT", i, mosfet_currents[i]);
+      return "FET_OVERCURRENT_FAULT";
     }
     if (mosfet_temperatures[i] > 60.0) {
-      return true;
+      print_channel_fault("FET_OVERTEMP_FAULT", i, mosfet_temperatures[i]); // 999.0 = above measurable range
+      return "FET_OVERTEMP_FAULT";
     }
     if (mosfet_temperatures[i] == TEMPERATURE_FAULT) {
-      return true; // A thermistor we can't read means we can't protect that MOSFET
+      print_channel_fault("THERMISTOR_OPEN_FAULT", i, mosfet_temperatures[i]);
+      return "THERMISTOR_OPEN_FAULT"; // A thermistor we can't read means we can't protect that MOSFET
     }
   }
-  return false;
+  return nullptr;
 }
 
-void shut_down() {
+// e.g. "FET_OVERCURRENT_FAULT:ch5,12.31"
+void print_channel_fault(const char *name, byte channel, float value) {
+  Serial.print(name);
+  Serial.print(":ch");
+  Serial.print(channel);
+  Serial.print(',');
+  Serial.println(value, 2);
+}
+
+void shut_down(const char *reason) {
   // Remove the load first: engage the hardware kill switch, then open the contactor once the current has
   // dropped so the LEV200 is not breaking full load, then latch. Zeroing the DAC goes last because it
   // needs I2C: if the bus is what failed, the battery is already disconnected before that call can hang.
@@ -532,7 +554,8 @@ void shut_down() {
     if (watchdog_running) {
       WDT.refresh();
     }
-    Serial.println("ERROR");
+    Serial.print("ERROR:");
+    Serial.println(reason);
     delay(1000);
   }
 }
@@ -549,7 +572,7 @@ void check_load_current() {
       Serial.print(" A, measured ");
       Serial.print(mosfet_current_total, 1);
       Serial.println(" A (check CB1 and the contactor)");
-      shut_down();
+      shut_down("NO_CURRENT_FAULT");
     }
   } else {
     no_current_since_ms = 0;
