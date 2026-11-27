@@ -136,6 +136,12 @@ float mosfet_avg_temp = 0.0; // Starting temperature
 float current_requested = 0.0; // Current requested at any given time
 unsigned long last_command_ms = 0; // millis() of the last valid command from the host
 
+// Incoming commands are collected a character at a time, so reading them never waits on the host.
+const byte COMMAND_BUFFER_SIZE = 32; // Longest valid command is "A320.0" or "ESTOP"
+char command_buffer[COMMAND_BUFFER_SIZE];
+byte command_length = 0;
+bool command_overflow = false; // Line too long: ignore it up to the next newline
+
 const int MOSFET_COUNT = 32;
 const float SHUNT_RESISTANCES[MOSFET_COUNT] = {0.0093, 0.0095, 0.0095, 0.0095, 
                                              0.0095, 0.0094, 0.0095, 0.0095,
@@ -172,7 +178,6 @@ void setup() {
   digitalWrite(ADC_TEMPERATURE_1_CS_PIN, HIGH);
 
   Serial.begin(SERIAL_BAUD);
-  Serial.setTimeout(10);
   print_log_header();
 
   initialize_mosfet_arrays();
@@ -268,28 +273,7 @@ void loop() {
 
   log_data();
 
-  if (Serial.available() > 0) {
-    String incomingCommand = Serial.readStringUntil('\n');
-    incomingCommand.trim();
-
-    if (incomingCommand == "ESTOP") {
-      shut_down();
-    }
-    else if (incomingCommand == "H") {
-      print_log_header();
-    }
-    else if (incomingCommand.substring(0, 1) == "A") {
-      float requested = incomingCommand.substring(1).toFloat();
-      if (requested < 0.0) {
-        requested = 0.0;
-      }
-      if (requested > MAX_CURRENT_REQUEST) {
-        requested = MAX_CURRENT_REQUEST;
-      }
-      current_requested = requested;
-      last_command_ms = millis();
-    }
-  }
+  read_commands();
 
   // Watchdog: if the host stops talking (crash, unplugged cable), stop sinking current.
   // The host must resend its "A<amps>" command at least every COMMAND_TIMEOUT_MS.
@@ -303,6 +287,47 @@ void loop() {
 
   if (should_shut_down()) {
     shut_down();
+  }
+}
+
+// Handle every complete line the host has sent since the last loop, not just one. During playback the
+// host may send faster than the ~40 ms loop; reading one line per loop would let a queue build up, so
+// playback would fall further and further behind (and an ESTOP would wait at the back of the line).
+// Lines are handled in order, so the newest "A" wins and ESTOP acts as soon as it's read.
+// A partial line just waits in command_buffer for the rest of it next loop.
+void read_commands() {
+  while (Serial.available() > 0) {
+    char c = Serial.read();
+    if (c == '\n' || c == '\r') {
+      if (!command_overflow && command_length > 0) {
+        command_buffer[command_length] = '\0';
+        handle_command(command_buffer);
+      }
+      command_length = 0;
+      command_overflow = false;
+    } else if (command_length < COMMAND_BUFFER_SIZE - 1) {
+      command_buffer[command_length++] = c;
+    } else {
+      command_overflow = true;
+    }
+  }
+}
+
+void handle_command(const char *command) {
+  if (strcmp(command, "ESTOP") == 0) {
+    shut_down();
+  } else if (strcmp(command, "H") == 0) {
+    print_log_header();
+  } else if (command[0] == 'A') {
+    float requested = atof(command + 1);
+    if (requested < 0.0) {
+      requested = 0.0;
+    }
+    if (requested > MAX_CURRENT_REQUEST) {
+      requested = MAX_CURRENT_REQUEST;
+    }
+    current_requested = requested;
+    last_command_ms = millis();
   }
 }
 
