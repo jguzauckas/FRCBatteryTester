@@ -2,6 +2,7 @@
 #include<Wire.h>
 #include<SPI.h>
 #include<Adafruit_MCP4725.h>
+#include<WDT.h> // Uno R4 (Renesas core) hardware watchdog
 
 #define DAC_I2C_ADDRESS 0x62 // Default address for Adafruit MCP4725
 #define ADS_BATTERY_CURRENT_I2C_ADDRESS 0x48 // U6, ADDR to GND: HASS 400-S output (AIN0) vs. its reference (AIN1)
@@ -47,6 +48,14 @@ const unsigned int TEMPERATURE_SETTLE_US = 3000; // ~9 time constants
 const unsigned long SERIAL_BAUD = 115200;
 
 const unsigned long COMMAND_TIMEOUT_MS = 1000; // Drop the load to 0 A if no command arrives for this long
+
+// Hardware watchdog. If the sketch ever stops running loop() (a stuck I2C bus, a hung library call), the
+// software checks stop too and the load would keep running at its last setting. The watchdog resets the
+// Arduino if loop() hasn't refreshed it within this time. On reset every pin goes high-impedance, so R303
+// opens the contactor and R1 turns on the kill switch: the hardware fails safe without any code running.
+// The Uno R4 watchdog allows up to about 5.5 s. A normal loop takes ~40 ms.
+const unsigned long WATCHDOG_TIMEOUT_MS = 2000;
+bool watchdog_running = false; // Only refresh after WDT.begin(): on this chip a refresh is what starts it
 
 Adafruit_MCP4725 dac;
 ADS1115_WE ads_battery_current = ADS1115_WE(ADS_BATTERY_CURRENT_I2C_ADDRESS);
@@ -194,6 +203,13 @@ void setup() {
     Serial.println("WARNING:V5_RAIL_ADC_MISSING, assuming 5.0 V for thermistors");
   }
 
+  // A watchdog reset means the sketch hung while the battery was connected. Don't quietly reconnect it:
+  // stay latched until someone presses reset or power-cycles the tester (both clear this flag).
+  if (R_SYSTEM->RSTSR1_b.WDTRF) {
+    Serial.println("WATCHDOG_RESET_FAULT:sketch hung, press reset to restart");
+    shut_down();
+  }
+
   delay(1000); // Give hardware time to stabilize
   read_5v_rail(); // Before any thermistor is read
 
@@ -217,6 +233,14 @@ void setup() {
     shut_down();
   }
 
+  // Start the watchdog just before the battery is connected. Everything above runs with the contactor
+  // open, so a hang there is harmless. Refuse to connect the battery without it.
+  if (!WDT.begin(WATCHDOG_TIMEOUT_MS)) {
+    Serial.println("WATCHDOG_START_FAULT");
+    shut_down();
+  }
+  watchdog_running = true;
+
   // Close the contactor with the load still killed and the DAC at 0, then release the kill switch.
   digitalWrite(CONTACTOR_PIN, HIGH);
   delay(CONTACTOR_CLOSE_MS);
@@ -234,6 +258,8 @@ void initialize_mosfet_arrays() {
 }
 
 void loop() {
+  WDT.refresh(); // Proves loop() is still running; see WATCHDOG_TIMEOUT_MS
+
   // Monitor Values
   read_robot_battery();
   read_5v_rail();
@@ -459,15 +485,20 @@ bool should_shut_down() {
 }
 
 void shut_down() {
-  // Remove the load first: engage the hardware kill switch and zero the DAC, then open the contactor
-  // once the current has dropped so the LEV200 is not breaking full load, then latch.
+  // Remove the load first: engage the hardware kill switch, then open the contactor once the current has
+  // dropped so the LEV200 is not breaking full load, then latch. Zeroing the DAC goes last because it
+  // needs I2C: if the bus is what failed, the battery is already disconnected before that call can hang.
   current_requested = 0.0;
   digitalWrite(E_STOP_PIN, HIGH);
-  dac.setVoltage(0, false);
   delay(CONTACTOR_OPEN_DELAY_MS);
   digitalWrite(CONTACTOR_PIN, LOW);
+  dac.setVoltage(0, false);
 
   while (true) {
+    // Keep refreshing so the watchdog doesn't reset us out of the latch
+    if (watchdog_running) {
+      WDT.refresh();
+    }
     Serial.println("ERROR");
     delay(1000);
   }
