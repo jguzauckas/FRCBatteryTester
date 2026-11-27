@@ -37,6 +37,15 @@ const SPISettings ADS8320_SPI_SETTINGS(2000000, MSBFIRST, SPI_MODE0); // DCLOCK 
 const unsigned int CURRENT_SETTLE_US = 150;
 const unsigned int TEMPERATURE_SETTLE_US = 3000; // ~9 time constants
 
+// Serial link to the host (Pi). Each loop sends one compact CSV data line (~370 characters, ~32 ms at
+// 115200 baud). The old labeled format was ~1,000 characters, about 1 s per loop at 9600 baud, which slowed
+// every safety check and made match playback impossible. Raise SERIAL_BAUD (e.g. 921600) if the host keeps up;
+// both ends must match.
+//   H,<field names...>   header: sent at startup and whenever the host sends "H"
+//   D,<values...>        one data line per loop, in header order
+//   anything else        events and faults (WARNING..., ..._FAULT:..., ERROR)
+const unsigned long SERIAL_BAUD = 115200;
+
 const unsigned long COMMAND_TIMEOUT_MS = 1000; // Drop the load to 0 A if no command arrives for this long
 
 Adafruit_MCP4725 dac;
@@ -145,8 +154,9 @@ void setup() {
   digitalWrite(ADC_TEMPERATURE_0_CS_PIN, HIGH);
   digitalWrite(ADC_TEMPERATURE_1_CS_PIN, HIGH);
 
-  Serial.begin(9600);
+  Serial.begin(SERIAL_BAUD);
   Serial.setTimeout(10);
+  print_log_header();
 
   initialize_mosfet_arrays();
 
@@ -230,6 +240,9 @@ void loop() {
 
     if (incomingCommand == "ESTOP") {
       shut_down();
+    }
+    else if (incomingCommand == "H") {
+      print_log_header();
     }
     else if (incomingCommand.substring(0, 1) == "A") {
       float requested = incomingCommand.substring(1).toFloat();
@@ -367,29 +380,43 @@ float temperature(float voltage) {
   return steinhart - 273.15;
 }
 
-void log_data() {
-  Serial.print("RBT_BATT_V:");
-  Serial.print(robot_battery_v);
-  Serial.print(",V5_RAIL:");
-  Serial.print(thermistor_v_in, 3);
-  Serial.print(",RBT_BATT_I:");
-  Serial.print(robot_battery_i);
-  Serial.print(",FET_TOTAL_I:");
-  Serial.print(mosfet_current_total);
-  Serial.print(",GAIN_CORR:");
-  Serial.print(gain_correction, 4);
-  Serial.print(",FET_AVG_T:");
-  Serial.print(mosfet_avg_temp);
-
+void print_log_header() {
+  Serial.print("H,ms,batt_v,batt_i,v5_rail,req_i,fet_total_i,gain_corr,fet_avg_t");
   for (int i = 0; i < MOSFET_COUNT; i++) {
-    Serial.print(",FET_I_");
+    Serial.print(",i");
     Serial.print(i);
-    Serial.print(":");
-    Serial.print(mosfet_currents[i]);
-    Serial.print(",FET_T_");
+  }
+  for (int i = 0; i < MOSFET_COUNT; i++) {
+    Serial.print(",t");
     Serial.print(i);
-    Serial.print(":");
-    Serial.print(mosfet_temperatures[i]);
+  }
+  Serial.println();
+}
+
+void log_data() {
+  Serial.print("D,");
+  Serial.print(millis());
+  Serial.print(',');
+  Serial.print(robot_battery_v, 2);
+  Serial.print(',');
+  Serial.print(robot_battery_i, 1);
+  Serial.print(',');
+  Serial.print(thermistor_v_in, 3);
+  Serial.print(',');
+  Serial.print(current_requested, 1);
+  Serial.print(',');
+  Serial.print(mosfet_current_total, 1);
+  Serial.print(',');
+  Serial.print(gain_correction, 4);
+  Serial.print(',');
+  Serial.print(mosfet_avg_temp, 1);
+  for (int i = 0; i < MOSFET_COUNT; i++) {
+    Serial.print(',');
+    Serial.print(mosfet_currents[i], 2);
+  }
+  for (int i = 0; i < MOSFET_COUNT; i++) {
+    Serial.print(',');
+    Serial.print(mosfet_temperatures[i], 1);
   }
   Serial.println();
 }
