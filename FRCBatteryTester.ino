@@ -6,6 +6,7 @@
 #define DAC_I2C_ADDRESS 0x62 // Default address for Adafruit MCP4725
 #define ADS_BATTERY_CURRENT_I2C_ADDRESS 0x48 // U6, ADDR to GND: HASS 400-S output (AIN0) vs. its reference (AIN1)
 #define ADS_BATTERY_VOLTAGE_I2C_ADDRESS 0x49 // U3, ADDR to 5V: battery voltage divider on AIN0
+#define ADS_5V_RAIL_I2C_ADDRESS 0x4A // U26, ADDR to SDA: +5V rail wired straight to AIN0 (+/-6.144 V range)
 
 // Pin numbers follow the KiCad schematic (Arduino Uno R4 WiFi shield)
 const int S0_PIN = 2; // CD74HC4067 address lines, shared by all four muxes
@@ -41,6 +42,7 @@ const unsigned long COMMAND_TIMEOUT_MS = 1000; // Drop the load to 0 A if no com
 Adafruit_MCP4725 dac;
 ADS1115_WE ads_battery_current = ADS1115_WE(ADS_BATTERY_CURRENT_I2C_ADDRESS);
 ADS1115_WE ads_battery_voltage = ADS1115_WE(ADS_BATTERY_VOLTAGE_I2C_ADDRESS);
+ADS1115_WE ads_5v_rail = ADS1115_WE(ADS_5V_RAIL_I2C_ADDRESS);
 
 const float ROBOT_BATTERY_V_SCALING_FACTOR = (10000.0 + 3300.0) / 3300.0; // 10k top resistor and 3.3k bottom resistor
 const float ROBOT_BATTERY_I_SCALING_FACTOR = 400 / 0.625; // HASS 400-S: 0.625 V (Vout - Vref) per 400 A
@@ -51,7 +53,14 @@ const float BATTERY_I_ZERO_MAX_V = 0.1; // ~64 A. A bigger "zero" means the sens
 float battery_i_zero_v = 0.0;
 
 const float THERMISTOR_R_FIXED = 3900.0; // Fixed (bottom) resistor for voltage divider, 3.9k so 85 C stays under the 4.096 V reference
-const float THERMISTOR_V_IN = 5.0; // Voltage going into Thermistor
+// The thermistor dividers run from the +5V rail, but the ADS8320s measure against the 4.096 V reference, so
+// the conversion needs the rail's actual voltage. U26 measures it every loop; a 2% low rail would otherwise
+// make every MOSFET read ~1.5 C cool at 60 C.
+const float THERMISTOR_V_IN_DEFAULT = 5.0; // Used only if U26 doesn't respond at startup
+const float V5_RAIL_MIN = 4.5; // Outside this window the rail (or U26) is faulty, so the tester shuts down
+const float V5_RAIL_MAX = 5.5;
+float thermistor_v_in = THERMISTOR_V_IN_DEFAULT; // Measured +5V rail, used in the thermistor math
+bool v5_rail_adc_ok = false;
 const float THERMISTOR_R_NOMINAL = 10000.0; // Thermistors rated resistance at base temperature
 const float THERMISTOR_T_NOMINAL = 25.0 + 273.15; // 25 degrees Celsius converted to Kelvin
 const float THERMISTOR_BETA = 3988.0; // Rated Beta of Thermistor
@@ -150,7 +159,17 @@ void setup() {
   ads_battery_voltage.setCompareChannels(ADS1115_COMP_0_GND);
   ads_battery_voltage.setMeasureMode(ADS1115_CONTINUOUS);
 
+  v5_rail_adc_ok = ads_5v_rail.init();
+  if (v5_rail_adc_ok) {
+    ads_5v_rail.setVoltageRange_mV(ADS1115_RANGE_6144); // AIN0 sits at VDD, allowed up to VDD + 0.3 V
+    ads_5v_rail.setCompareChannels(ADS1115_COMP_0_GND);
+    ads_5v_rail.setMeasureMode(ADS1115_CONTINUOUS);
+  } else {
+    Serial.println("WARNING:V5_RAIL_ADC_MISSING, assuming 5.0 V for thermistors");
+  }
+
   delay(1000); // Give hardware time to stabilize
+  read_5v_rail(); // Before any thermistor is read
 
   // Read every thermistor once so no MOSFET starts with an unchecked temperature.
   for (byte address = 0; address < 16; address++) {
@@ -186,6 +205,7 @@ void initialize_mosfet_arrays() {
 void loop() {
   // Monitor Values
   read_robot_battery();
+  read_5v_rail();
 
   read_mosfets();
 
@@ -238,6 +258,19 @@ void calibrate_battery_current_zero() {
     Serial.println(battery_i_zero_v, 4);
     shut_down(); // Can't trust the current sensor, so never connect the battery
   }
+}
+
+void read_5v_rail() {
+  if (!v5_rail_adc_ok) {
+    return; // Keep THERMISTOR_V_IN_DEFAULT
+  }
+  float v = ads_5v_rail.getResult_V();
+  if (v < V5_RAIL_MIN || v > V5_RAIL_MAX) {
+    Serial.print("V5_RAIL_FAULT:");
+    Serial.println(v, 3);
+    shut_down(); // Every sensor and the thermistor math depend on this rail
+  }
+  thermistor_v_in = v;
 }
 
 void read_robot_battery() {
@@ -316,7 +349,7 @@ float temperature(float voltage) {
     return TEMPERATURE_SATURATED; // Too hot to measure or shorted: trips the over-temperature check
   }
 
-  float resistance = THERMISTOR_R_FIXED * ((THERMISTOR_V_IN / voltage) - 1.0);
+  float resistance = THERMISTOR_R_FIXED * ((thermistor_v_in / voltage) - 1.0);
   float steinhart = 1.0 / ((1.0 / THERMISTOR_T_NOMINAL) + (1.0 / THERMISTOR_BETA) * log(resistance / THERMISTOR_R_NOMINAL));
   return steinhart - 273.15;
 }
@@ -324,6 +357,8 @@ float temperature(float voltage) {
 void log_data() {
   Serial.print("RBT_BATT_V:");
   Serial.print(robot_battery_v);
+  Serial.print(",V5_RAIL:");
+  Serial.print(thermistor_v_in, 3);
   Serial.print(",RBT_BATT_I:");
   Serial.print(robot_battery_i);
   Serial.print(",FET_TOTAL_I:");
