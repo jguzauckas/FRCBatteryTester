@@ -237,6 +237,7 @@
       "pin_to_pin": "warning",
       "power_pin_not_driven": "error",
       "same_local_global_label": "warning",
+      "same_local_global_power": "warning",
       "similar_label_and_power": "warning",
       "similar_labels": "warning",
       "similar_power": "warning",
@@ -284,8 +285,8 @@
     "meta": {
       "version": 5
     },
-    "net_colors": null,
-    "netclass_assignments": null,
+    "net_colors": {},
+    "netclass_assignments": {},
     "netclass_patterns": []
   },
   "pcbnew": {
@@ -294,6 +295,7 @@
       "netlist": "",
       "plot": "",
       "specctra_dsn": "",
+      "step": "",
       "vrml": ""
     },
     "page_layout_descr_file": ""
@@ -416,7 +418,7 @@
         "uuid": "625d3230-dac1-4eb0-b967-6016d0166323"
       }
     ],
-    "used_designators": "",
+    "used_designators": "#PWR5-7,#PWR9-11,#PWR14-19,#PWR22-27,#PWR31-33,#PWR35-37,#PWR40-45,#PWR48-53,#PWR57-59,#PWR61-63,#PWR66-71,#PWR74-79,#PWR83-85,#PWR87-89,#PWR92-97,#PWR100-105,#PWR109-111,#PWR113-115,#PWR118-123,#PWR126-131,#PWR135-137,#PWR139-141,#PWR144-149,#PWR152-157,#PWR198-249,C2-4,C6-8,C10-12,C14-16,C18-20,C22-24,C26-28,C30-32,C34-36,C38-40,C42-44,C46-48,C68-83,Q3-5,Q7-9,Q11-13,Q15-17,Q19-21,Q23-33,R7-9,R11-13,R15-17,R19-21,R23-25,R27-29,R31-33,R35-37,R39-41,R43-45,R47-49,R51-53,R55-57,R59-61,R63-69,R71-73,R75-77,R79-81,R83-85,R87-89,R91-97,R99-101,R103-105,R107-109,R111-113,R115-117,R119-125,R127-129,R131-133,R135-137,R139-141,R143-145,R147-153,R155-157,R159-161,R163-165,R167-169,R171-173,R181-270,TH2-4,TH6-8,TH10-12,TH14-16,TH18-20,TH22-32,U17,U23-31",
     "variants": []
   },
   "sheets": [
@@ -443,6 +445,14 @@
     [
       "b2e8d07d-cbd1-4bfa-a593-9a1377dfd73f",
       "MOSFET Circuit2"
+    ],
+    [
+      "5cdc9f58-b218-47f4-8bc4-6ae22dbe5e1e",
+      "MOSFET Circuit3"
+    ],
+    [
+      "5cdc9f58-b218-47f4-8bc4-6ae22dbe5e1e",
+      "MOSFET Circuit3"
     ],
     [
       "c25cb8f3-126f-4019-a19e-3f2f45933c4e",
