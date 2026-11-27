@@ -4876,7 +4876,7 @@
 	)
 	(text "Robot Current Sensing"
 		(exclude_from_sim no)
-		(at 230.886 97.79 0)
+		(at 229.362 96.774 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4972,6 +4972,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "02369d52-d532-4167-8924-02a2a12462a3")
+	)
+	(junction
+		(at 231.14 106.68)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0b54d036-46a8-41f7-9322-11fb7ffbcf75")
 	)
 	(junction
 		(at 110.49 38.1)
@@ -5070,16 +5076,16 @@
 		(uuid "a2933ec2-3aa2-46c1-82e5-2d7fb096918d")
 	)
 	(junction
+		(at 233.68 127)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a800397d-6384-446d-a9db-ba4aea4ad0a0")
+	)
+	(junction
 		(at 29.21 69.85)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "b76108ad-39c7-445e-ad0a-d98d4f2ee5d9")
-	)
-	(junction
-		(at 231.14 106.68)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "c59d4e88-e1a1-40a3-baaa-b54edc9a39d9")
 	)
 	(junction
 		(at 261.62 143.51)
@@ -5297,6 +5303,16 @@
 	)
 	(wire
 		(pts
+			(xy 205.74 106.68) (xy 219.71 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "400b18e5-2d61-45b9-bc47-eee2f5186e61")
+	)
+	(wire
+		(pts
 			(xy 172.72 52.07) (xy 182.88 52.07)
 		)
 		(stroke
@@ -5344,16 +5360,6 @@
 			(type default)
 		)
 		(uuid "5174289e-3e99-427b-b5bf-d4818e9d902c")
-	)
-	(wire
-		(pts
-			(xy 231.14 104.14) (xy 231.14 106.68)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "51d38af0-b02c-49e8-8250-2074f6428f7f")
 	)
 	(wire
 		(pts
@@ -5524,6 +5530,16 @@
 			(type default)
 		)
 		(uuid "7e968a69-9206-4e6a-b5f5-ae54a0deee21")
+	)
+	(wire
+		(pts
+			(xy 233.68 127) (xy 250.19 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7f353ab0-4640-400f-adcd-8502fe1d3746")
 	)
 	(wire
 		(pts
@@ -5714,6 +5730,16 @@
 			(type default)
 		)
 		(uuid "b1f647ec-e5dd-4255-baa1-0f144efef263")
+	)
+	(wire
+		(pts
+			(xy 227.33 106.68) (xy 231.14 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b2c5d5cb-7234-4480-8313-a096a969596d")
 	)
 	(wire
 		(pts
@@ -6145,6 +6171,16 @@
 		)
 		(uuid "5389ef70-f05e-4b0e-a4a3-e00d164cd1a6")
 	)
+	(label "HTFS400 Filter"
+		(at 250.19 127 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "6f883f04-a22a-4663-bdbd-fa620c1667a9")
+	)
 	(label "RBT C VOut"
 		(at 215.9 46.99 180)
 		(effects
@@ -6244,6 +6280,16 @@
 			(justify left bottom)
 		)
 		(uuid "979accbc-d973-4234-bcf8-8f3a15732377")
+	)
+	(label "HTFS400 Filter"
+		(at 205.74 106.68 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "9bac17ed-332c-437d-bd62-d671cb4b62db")
 	)
 	(label "RBT V"
 		(at 248.92 97.79 0)
@@ -9209,6 +9255,88 @@
 			(project "Battery Tester"
 				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
 					(reference "#PWRGND014")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 223.52 106.68 270)
+		(mirror x)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "73d58d0d-506d-4886-b42b-42a8da3ad1d5")
+		(property "Reference" "C119"
+			(at 225.806 99.822 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "0.1 muF"
+			(at 227.076 102.616 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 219.71 105.7148 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 223.52 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 223.52 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "9bd0741e-1667-4101-b3fd-f101e807fa99")
+		)
+		(pin "1"
+			(uuid "69c7a3fe-5edc-4ff5-a6fe-8221cce5a811")
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
+					(reference "C119")
 					(unit 1)
 				)
 			)
