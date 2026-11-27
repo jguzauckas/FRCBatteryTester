@@ -66,6 +66,19 @@ const int DAC_COUNT = 4095; // DAC resolution is 12 bits (2^12 -1)
 const float DAC_DIVIDER_RATIO = 1200.0 / (47000.0 + 1200.0);
 const float MAX_CURRENT_REQUEST = 10.0 * 32; // 10 A average per MOSFET, under the 11 A per-MOSFET trip
 
+// Outer current loop. The DAC uses the 5 V rail as its reference and the 47k / 1.2k dividers have tolerance,
+// so the commanded current is off by a few percent. Each loop compares the total measured across all 32
+// shunts with what was asked for last loop and nudges a gain correction applied to the DAC command.
+// Correcting gain (not adding amps) keeps the correction right as the request changes during playback.
+const float GAIN_LEARN_MIN_CURRENT = 30.0; // A total (~1 A per MOSFET). Below this, op-amp offsets (up to
+                                          // ~0.3 A per channel) would skew the estimate, so the gain isn't updated
+const float GAIN_LEARN_RATE = 0.5; // Fraction of the measured error removed each loop (stable for any loop time)
+const float GAIN_CORRECTION_MIN = 0.85;
+const float GAIN_CORRECTION_MAX = 1.15; // Limits how hard the other channels get pushed if some drop out
+float gain_correction = 1.0;
+float last_current_command = 0.0; // Request that produced the currents measured this loop
+bool last_command_saturated = false; // DAC was clipped at full scale, so the measurement can't be trusted for learning
+
 float robot_battery_v = 12.0; // Starting voltage (high enough to prevent shutdown)
 float robot_battery_i = 0.0; // Starting current (low enough to prevent shutdown)
 float mosfet_current_total = 0.0; // Starting current of all mosfets
@@ -194,6 +207,7 @@ void loop() {
     current_requested = 0.0;
   }
 
+  update_gain_correction();
   set_current_request(current_requested); // Use this to control the voltage of the DAC for mosfet control.
 
   if (should_shut_down()) {
@@ -289,6 +303,8 @@ void log_data() {
   Serial.print(robot_battery_i);
   Serial.print(",FET_TOTAL_I:");
   Serial.print(mosfet_current_total);
+  Serial.print(",GAIN_CORR:");
+  Serial.print(gain_correction, 4);
   Serial.print(",FET_AVG_T:");
   Serial.print(mosfet_avg_temp);
 
@@ -342,14 +358,28 @@ void shut_down() {
   }
 }
 
+// Called once per loop, after read_mosfets() has measured the result of last loop's command.
+void update_gain_correction() {
+  if (last_current_command < GAIN_LEARN_MIN_CURRENT || last_command_saturated || mosfet_current_total < 0.5) {
+    return; // Nothing trustworthy to learn from. Keep the last correction.
+  }
+  // If the system delivered `measured` for `last_current_command`, this correction would have hit it exactly.
+  float ideal = gain_correction * last_current_command / mosfet_current_total;
+  gain_correction += GAIN_LEARN_RATE * (ideal - gain_correction);
+  gain_correction = constrain(gain_correction, GAIN_CORRECTION_MIN, GAIN_CORRECTION_MAX);
+}
+
 void set_current_request(float current) {
-  // Every op-amp holds its shunt at the DAC Control voltage, so total current = V * (sum of 1/R).
-  float controlVoltage = current / total_system_conductance;
-  float targetVoltage = controlVoltage / DAC_DIVIDER_RATIO; // Undo the 4.7k / 120 ohm divider
+  last_current_command = current;
+
+  // Every op-amp holds its shunt at the per-channel setpoint, so total current = V * (sum of 1/R).
+  float controlVoltage = (current * gain_correction) / total_system_conductance;
+  float targetVoltage = controlVoltage / DAC_DIVIDER_RATIO; // Undo the per-channel 47k / 1.2k divider
 
   float rawCounts = (targetVoltage / DAC_V_IN) * (float) DAC_COUNT;
   int dacOutput = round(rawCounts);
 
+  last_command_saturated = dacOutput > DAC_COUNT;
   if (dacOutput < 0) {
     dac.setVoltage(0, false);
   } else if (dacOutput > DAC_COUNT) {
