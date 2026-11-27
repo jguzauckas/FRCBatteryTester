@@ -1115,6 +1115,12 @@
 		(uuid "20897269-c9f7-4d6e-988d-712f65e34c54")
 	)
 	(junction
+		(at 232.41 40.64)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "2cc60aee-5aff-4e20-999c-3d769291f926")
+	)
+	(junction
 		(at 40.64 82.55)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1217,6 +1223,12 @@
 		(uuid "b851fd5d-4e8a-483d-8cf8-6e213d2c43e0")
 	)
 	(junction
+		(at 232.41 25.4)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b8be09fb-e64e-43ca-8057-0fc9f84a1931")
+	)
+	(junction
 		(at 66.04 87.63)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1259,6 +1271,16 @@
 			(type default)
 		)
 		(uuid "09968c72-949d-4d88-9a25-5131f1362e9e")
+	)
+	(wire
+		(pts
+			(xy 217.17 29.21) (xy 217.17 25.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "197a2811-32e4-42f9-8422-79f72d722a61")
 	)
 	(wire
 		(pts
@@ -1772,6 +1794,16 @@
 	)
 	(wire
 		(pts
+			(xy 217.17 40.64) (xy 232.41 40.64)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "96038cd6-8ee3-41c3-aaf3-2f22793a7427")
+	)
+	(wire
+		(pts
 			(xy 119.38 137.16) (xy 113.03 137.16)
 		)
 		(stroke
@@ -2062,6 +2094,16 @@
 	)
 	(wire
 		(pts
+			(xy 217.17 25.4) (xy 232.41 25.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e4869f7d-14c9-4c9e-bf1c-2019fa5539a7")
+	)
+	(wire
+		(pts
 			(xy 113.03 132.08) (xy 113.03 137.16)
 		)
 		(stroke
@@ -2179,6 +2221,16 @@
 			(type default)
 		)
 		(uuid "fdec5b55-14db-44f0-a621-9d579e821d97")
+	)
+	(wire
+		(pts
+			(xy 217.17 36.83) (xy 217.17 40.64)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fea0845a-1c2c-411f-984b-dd2b040980c9")
 	)
 	(label "V0_MUX"
 		(at 19.05 39.37 0)
@@ -5436,6 +5488,85 @@
 			(project "Battery Tester"
 				(path "/625d3230-dac1-4eb0-b967-6016d0166323/c25cb8f3-126f-4019-a19e-3f2f45933c4e"
 					(reference "C95")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 217.17 33.02 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "839985ba-4985-40f3-8497-919f06d6fdbc")
+		(property "Reference" "C121"
+			(at 209.55 31.242 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "0.1 muF"
+			(at 210.058 34.29 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 218.1352 36.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 217.17 33.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 217.17 33.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "5a1c13cd-b992-491b-a97a-b2853bf3dbd7")
+		)
+		(pin "1"
+			(uuid "092a7258-6982-4930-93ce-db901dd29830")
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323/c25cb8f3-126f-4019-a19e-3f2f45933c4e"
+					(reference "C121")
 					(unit 1)
 				)
 			)
