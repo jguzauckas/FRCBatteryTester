@@ -5,6 +5,359 @@
 	(uuid "625d3230-dac1-4eb0-b967-6016d0166323")
 	(paper "A4")
 	(lib_symbols
+		(symbol "Amplifier_Operational:Opamp_Dual"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "Opamp_Dual"
+				(at 0 -5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Dual operational amplifier"
+				(at 0 -8.89 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Sim.Library" "${KICAD10_SYMBOL_DIR}/Simulation_SPICE.sp"
+				(at -12.7 -13.97 0)
+				(show_name yes)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Sim.Name" "kicad_builtin_opamp_dual"
+				(at -12.7 -21.59 0)
+				(show_name yes)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Sim.Device" "SUBCKT"
+				(at -12.7 -19.05 0)
+				(show_name yes)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Sim.Pins" "1=out1 2=in1- 3=in1+ 4=vee 5=in2+ 6=in2- 7=out2 8=vcc"
+				(at -12.7 -16.51 0)
+				(show_name yes)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property private "KLC_S3.1" "Units A+B are centered, UnitC has a offset so it fits nicely on A or B."
+				(at -12.7 -25.4 0)
+				(show_name yes)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property private "KLC_S4.1" "Pin1 and Pin7 are the output, adding a name would look ugly and does not add a benefit."
+				(at -12.7 -27.94 0)
+				(show_name yes)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property private "KLC_S6.2" "This is a generic symbol and thus has no datasheet."
+				(at -12.7 -30.48 0)
+				(show_name yes)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "dual opamp"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "SOIC*3.9x4.9mm*P1.27mm* DIP*W7.62mm* MSOP*3x3mm*P0.65mm* SSOP*2.95x2.8mm*P0.65mm* TSSOP*3x3mm*P0.65mm* VSSOP*P0.5mm* TO?99*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Opamp_Dual_1_1"
+				(polyline
+					(pts
+						(xy -5.08 5.08) (xy 5.08 0) (xy -5.08 -5.08) (xy -5.08 5.08)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin output line
+					(at 7.62 0 180)
+					(length 2.54)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -7.62 -2.54 0)
+					(length 2.54)
+					(name "-"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -7.62 2.54 0)
+					(length 2.54)
+					(name "+"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "Opamp_Dual_2_1"
+				(polyline
+					(pts
+						(xy -5.08 5.08) (xy 5.08 0) (xy -5.08 -5.08) (xy -5.08 5.08)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin input line
+					(at -7.62 2.54 0)
+					(length 2.54)
+					(name "+"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -7.62 -2.54 0)
+					(length 2.54)
+					(name "-"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 7.62 0 180)
+					(length 2.54)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "Opamp_Dual_3_1"
+				(pin power_in line
+					(at -2.54 -7.62 90)
+					(length 3.81)
+					(name "V-"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -2.54 7.62 270)
+					(length 3.81)
+					(name "V+"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Analog_ADC:ADS1115IDGS"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -3890,7 +4243,7 @@
 	)
 	(text "DAC - MOSFET Voltage Control"
 		(exclude_from_sim no)
-		(at 100.584 154.686 0)
+		(at 83.82 145.288 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3931,10 +4284,22 @@
 		(uuid "d0a4387f-f70e-4a97-9d89-065682faaaad")
 	)
 	(junction
+		(at 116.84 165.1)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "02369d52-d532-4167-8924-02a2a12462a3")
+	)
+	(junction
 		(at 110.49 38.1)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "0cc15bd5-84fc-4677-84a4-dbf9e76c9ece")
+	)
+	(junction
+		(at 102.87 165.1)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "114d5909-fbe1-4b93-8bbc-d7e6e2c86d32")
 	)
 	(junction
 		(at 115.57 30.48)
@@ -3943,28 +4308,10 @@
 		(uuid "19b8f6c8-2ac4-49b2-bc63-5a4cc56038f9")
 	)
 	(junction
-		(at 134.62 179.07)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "24302dfd-c709-41b5-b39b-5dab0240f704")
-	)
-	(junction
-		(at 125.73 179.07)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "33945481-e67a-40de-8261-30c8feab4f4f")
-	)
-	(junction
 		(at 257.81 106.68)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "37c24390-b3ef-4925-b8fc-8761fb28e92b")
-	)
-	(junction
-		(at 134.62 168.91)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "5ac1c001-49a2-41e4-9ee8-d0bb1919e45d")
 	)
 	(junction
 		(at 250.19 111.76)
@@ -3973,10 +4320,22 @@
 		(uuid "5b57a916-96ce-4c92-a9d5-65ead013416b")
 	)
 	(junction
+		(at 110.49 179.07)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "6015f8b6-44d8-47e8-9c27-bbd42a5ff786")
+	)
+	(junction
 		(at 110.49 30.48)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "610b1481-4c8a-4bbf-b284-959db87828a2")
+	)
+	(junction
+		(at 133.35 167.64)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "74455b9c-d328-4c76-b5c8-f38b117ed81c")
 	)
 	(junction
 		(at 115.57 38.1)
@@ -3985,10 +4344,16 @@
 		(uuid "83c4be17-1729-419a-a99d-d95bce826c14")
 	)
 	(junction
-		(at 144.78 173.99)
+		(at 127 152.4)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "8f6eddca-4fcc-4c01-8072-98cc5d874d39")
+	)
+	(junction
+		(at 95.25 179.07)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "96f23fac-906f-407e-9312-8c2216a018cf")
 	)
 	(junction
 		(at 128.27 38.1)
@@ -4090,16 +4455,6 @@
 	)
 	(wire
 		(pts
-			(xy 134.62 179.07) (xy 165.1 179.07)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "12b6a2b2-6588-4cec-9c83-8c7dce325f7b")
-	)
-	(wire
-		(pts
 			(xy 228.6 52.07) (xy 238.76 52.07)
 		)
 		(stroke
@@ -4160,7 +4515,7 @@
 	)
 	(wire
 		(pts
-			(xy 142.24 173.99) (xy 144.78 173.99)
+			(xy 124.46 152.4) (xy 127 152.4)
 		)
 		(stroke
 			(width 0)
@@ -4190,13 +4545,23 @@
 	)
 	(wire
 		(pts
-			(xy 125.73 168.91) (xy 134.62 168.91)
+			(xy 118.11 173.99) (xy 133.35 173.99)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "32058267-5c20-41dd-aa6f-a83878d6c3e4")
+		(uuid "2ae28b6e-3804-418e-911c-5631f9b27f01")
+	)
+	(wire
+		(pts
+			(xy 118.11 170.18) (xy 118.11 173.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2e1e41a9-8562-4ddc-a107-8ca29e81fed5")
 	)
 	(wire
 		(pts
@@ -4240,6 +4605,16 @@
 	)
 	(wire
 		(pts
+			(xy 133.35 173.99) (xy 133.35 167.64)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4451f8d8-bf07-4d38-a671-182759404c2e")
+	)
+	(wire
+		(pts
 			(xy 257.81 102.87) (xy 257.81 106.68)
 		)
 		(stroke
@@ -4250,13 +4625,13 @@
 	)
 	(wire
 		(pts
-			(xy 125.73 171.45) (xy 125.73 168.91)
+			(xy 133.35 167.64) (xy 146.05 167.64)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "4eebb357-0785-46e5-9bc9-df2e302fc434")
+		(uuid "4ad1ce3b-a92b-4301-b363-37c05dab28a2")
 	)
 	(wire
 		(pts
@@ -4267,6 +4642,16 @@
 			(type default)
 		)
 		(uuid "51d38af0-b02c-49e8-8250-2074f6428f7f")
+	)
+	(wire
+		(pts
+			(xy 116.84 157.48) (xy 116.84 165.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "54d1046d-c14c-4d70-a838-90a8ff40858b")
 	)
 	(wire
 		(pts
@@ -4290,7 +4675,17 @@
 	)
 	(wire
 		(pts
-			(xy 144.78 163.83) (xy 163.83 163.83)
+			(xy 95.25 184.15) (xy 99.06 184.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6156e1d9-5911-4733-87bc-27a62279ba5a")
+	)
+	(wire
+		(pts
+			(xy 127 142.24) (xy 146.05 142.24)
 		)
 		(stroke
 			(width 0)
@@ -4317,6 +4712,16 @@
 			(type default)
 		)
 		(uuid "68b62990-ef4f-4f47-9d60-176b3c69e55c")
+	)
+	(wire
+		(pts
+			(xy 95.25 179.07) (xy 95.25 184.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6af32ff1-7eff-4098-8616-09ac428652aa")
 	)
 	(wire
 		(pts
@@ -4360,6 +4765,16 @@
 	)
 	(wire
 		(pts
+			(xy 138.43 193.04) (xy 138.43 186.69)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "77e88627-88fa-466b-a5a7-7a2b7890daae")
+	)
+	(wire
+		(pts
 			(xy 172.72 49.53) (xy 182.88 49.53)
 		)
 		(stroke
@@ -4390,6 +4805,16 @@
 	)
 	(wire
 		(pts
+			(xy 110.49 179.07) (xy 110.49 184.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7e968a69-9206-4e6a-b5f5-ae54a0deee21")
+	)
+	(wire
+		(pts
 			(xy 250.19 121.92) (xy 250.19 130.81)
 		)
 		(stroke
@@ -4400,7 +4825,7 @@
 	)
 	(wire
 		(pts
-			(xy 144.78 163.83) (xy 144.78 173.99)
+			(xy 127 142.24) (xy 127 152.4)
 		)
 		(stroke
 			(width 0)
@@ -4450,6 +4875,26 @@
 	)
 	(wire
 		(pts
+			(xy 123.19 193.04) (xy 138.43 193.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "911f88b7-c6f8-4ede-8db8-82af7043b624")
+	)
+	(wire
+		(pts
+			(xy 118.11 165.1) (xy 116.84 165.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "97513f4c-46e9-430f-979b-150d3af419d0")
+	)
+	(wire
+		(pts
 			(xy 163.83 118.11) (xy 172.72 118.11)
 		)
 		(stroke
@@ -4457,16 +4902,6 @@
 			(type default)
 		)
 		(uuid "9f16d9a6-5dbf-483c-b4da-83f56f3ac662")
-	)
-	(wire
-		(pts
-			(xy 125.73 179.07) (xy 134.62 179.07)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a0e24224-620d-408f-a40d-f206fc6e1c96")
 	)
 	(wire
 		(pts
@@ -4510,13 +4945,23 @@
 	)
 	(wire
 		(pts
-			(xy 144.78 173.99) (xy 148.59 173.99)
+			(xy 127 152.4) (xy 130.81 152.4)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "a7a6edcf-1431-4fef-a2fc-37e35de18334")
+	)
+	(wire
+		(pts
+			(xy 110.49 184.15) (xy 106.68 184.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ac6d10a8-97db-4c93-945e-2286ab4e2eb4")
 	)
 	(wire
 		(pts
@@ -4580,6 +5025,16 @@
 	)
 	(wire
 		(pts
+			(xy 96.52 165.1) (xy 116.84 165.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "caf20074-48e7-40b5-bd04-55bbc13e9e96")
+	)
+	(wire
+		(pts
 			(xy 215.9 49.53) (xy 203.2 49.53)
 		)
 		(stroke
@@ -4590,7 +5045,7 @@
 	)
 	(wire
 		(pts
-			(xy 86.36 179.07) (xy 95.25 179.07)
+			(xy 59.69 165.1) (xy 68.58 165.1)
 		)
 		(stroke
 			(width 0)
@@ -4630,16 +5085,6 @@
 	)
 	(wire
 		(pts
-			(xy 123.19 179.07) (xy 125.73 179.07)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e0eb0f95-ba5d-4773-951a-f18f15b8db6f")
-	)
-	(wire
-		(pts
 			(xy 259.08 46.99) (xy 266.7 46.99)
 		)
 		(stroke
@@ -4650,7 +5095,7 @@
 	)
 	(wire
 		(pts
-			(xy 156.21 173.99) (xy 161.29 173.99)
+			(xy 138.43 152.4) (xy 143.51 152.4)
 		)
 		(stroke
 			(width 0)
@@ -4690,7 +5135,17 @@
 	)
 	(wire
 		(pts
-			(xy 86.36 176.53) (xy 95.25 176.53)
+			(xy 123.19 189.23) (xy 123.19 193.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e79a8ec6-48d3-4cdf-b9dc-29ac13ec3d40")
+	)
+	(wire
+		(pts
+			(xy 59.69 162.56) (xy 68.58 162.56)
 		)
 		(stroke
 			(width 0)
@@ -4759,7 +5214,7 @@
 		(uuid "07ef9f55-e9ac-4c09-8434-362a2e90fbe8")
 	)
 	(label "Emergency Shutoff"
-		(at 163.83 163.83 180)
+		(at 146.05 142.24 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4787,6 +5242,16 @@
 			(justify left bottom)
 		)
 		(uuid "2064dbad-84ee-4937-b25f-e35926aaf23e")
+	)
+	(label "DAC Control"
+		(at 146.05 167.64 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "22b3a5f1-3269-470d-a55f-e444e6bffefe")
 	)
 	(label "Ard D3"
 		(at 125.73 114.3 0)
@@ -4849,7 +5314,7 @@
 		(uuid "404856ef-6b6b-4934-bb9f-a0418679a422")
 	)
 	(label "Ard SDA"
-		(at 86.36 179.07 0)
+		(at 59.69 165.1 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4968,16 +5433,6 @@
 		)
 		(uuid "8afae04b-01c1-4a14-9c5d-04aff2938b7a")
 	)
-	(label "DAC Control"
-		(at 165.1 179.07 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "901feb00-7522-4197-9349-d00d29e7947a")
-	)
 	(label "RBT V"
 		(at 266.7 46.99 180)
 		(effects
@@ -5089,7 +5544,7 @@
 		(uuid "f4b6ea2a-69ab-41ca-8c2a-626411cd7ea9")
 	)
 	(label "Ard SCL"
-		(at 86.36 176.53 0)
+		(at 59.69 162.56 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5648,87 +6103,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R_US")
-		(at 125.73 175.26 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "0c76fb01-187b-49dd-a2c0-a2872d0fb16d")
-		(property "Reference" "R38"
-			(at 120.142 173.482 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "120 Ohm"
-			(at 115.316 175.768 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 126.746 175.514 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 125.73 175.26 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 125.73 175.26 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "2"
-			(uuid "b5185647-b9fe-47cf-afab-584ebf9f893c")
-		)
-		(pin "1"
-			(uuid "f740ed95-b546-42c0-a872-2c272f134cdc")
-		)
-		(instances
-			(project "Battery Tester"
-				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
-					(reference "R38")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Analog_ADC:ADS1115IDGS")
 		(at 248.92 49.53 0)
 		(mirror y)
@@ -5835,6 +6209,85 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 110.49 179.07 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "1558baee-8008-450d-b619-50f63dfba8e9")
+		(property "Reference" "#PWRGND015"
+			(at 116.84 179.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 114.3 179.0699 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 110.49 179.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 110.49 179.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 110.49 179.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "ba34acdb-4b7b-4e97-ab75-046361f814f1")
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
+					(reference "#PWRGND015")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Connector:Conn_01x02_Pin")
 		(at 53.34 24.13 0)
 		(unit 1)
@@ -5915,7 +6368,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 134.62 168.91 0)
+		(at 116.84 147.32 0)
 		(mirror x)
 		(unit 1)
 		(body_style 1)
@@ -5926,7 +6379,7 @@
 		(dnp no)
 		(uuid "223dfe42-cf54-41af-9eaf-c9b20aa9fe52")
 		(property "Reference" "#PWRGND07"
-			(at 134.62 162.56 0)
+			(at 116.84 140.97 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5937,7 +6390,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 134.62 163.83 0)
+			(at 116.84 142.24 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5947,7 +6400,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 134.62 168.91 0)
+			(at 116.84 147.32 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5958,7 +6411,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 134.62 168.91 0)
+			(at 116.84 147.32 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5969,7 +6422,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 134.62 168.91 0)
+			(at 116.84 147.32 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5993,7 +6446,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 152.4 173.99 90)
+		(at 134.62 152.4 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6004,7 +6457,7 @@
 		(fields_autoplaced yes)
 		(uuid "2b93b6b3-4147-4283-bc02-49912a4f1eb0")
 		(property "Reference" "R1"
-			(at 152.4 167.64 90)
+			(at 134.62 146.05 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6014,7 +6467,7 @@
 			)
 		)
 		(property "Value" "10k Ohm"
-			(at 152.4 170.18 90)
+			(at 134.62 148.59 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6024,7 +6477,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 152.654 172.974 90)
+			(at 134.874 151.384 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6035,7 +6488,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 152.4 173.99 0)
+			(at 134.62 152.4 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6046,7 +6499,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 152.4 173.99 0)
+			(at 134.62 152.4 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6153,8 +6606,171 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C")
+		(at 102.87 161.29 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "390c87d5-5971-4c4a-acdd-d6b9d7e73b2c")
+		(property "Reference" "C84"
+			(at 106.172 160.274 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "0.1 muF"
+			(at 105.918 162.56 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 103.8352 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 102.87 161.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 102.87 161.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "ef0734b5-596c-4f8b-b3d5-83fd5e7f3b91")
+		)
+		(pin "1"
+			(uuid "991dec55-34b1-436f-b6dd-c70e1a268e97")
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
+					(reference "C84")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 102.87 184.15 90)
+		(mirror x)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "406355f3-227d-4475-a290-03ac6347cf6e")
+		(property "Reference" "C85"
+			(at 101.854 187.452 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "0.1 muF"
+			(at 104.14 187.198 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 106.68 185.1152 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 102.87 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 102.87 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "6cee694d-61a0-44a1-bd71-8821100dfaef")
+		)
+		(pin "1"
+			(uuid "108102fe-1445-42d4-9736-a284cf02fc24")
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
+					(reference "C85")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Transistor_FET:2N7000")
-		(at 137.16 173.99 0)
+		(at 119.38 152.4 0)
 		(mirror y)
 		(unit 1)
 		(body_style 1)
@@ -6165,7 +6781,7 @@
 		(dnp no)
 		(uuid "4707a150-b5c9-43d0-b318-144205e5d5f6")
 		(property "Reference" "Q1"
-			(at 128.27 173.99 90)
+			(at 110.49 152.4 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6175,7 +6791,7 @@
 			)
 		)
 		(property "Value" "2N7000"
-			(at 130.81 173.99 90)
+			(at 113.03 152.4 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6185,7 +6801,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_THT:TO-92_Inline"
-			(at 132.08 175.895 0)
+			(at 114.3 154.305 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6198,7 +6814,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.vishay.com/docs/70226/70226.pdf"
-			(at 132.08 177.8 0)
+			(at 114.3 156.21 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6210,7 +6826,7 @@
 			)
 		)
 		(property "Description" "0.2A Id, 200V Vds, N-Channel MOSFET, 2.6V Logic Level, TO-92"
-			(at 137.16 173.99 0)
+			(at 119.38 152.4 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6320,9 +6936,8 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+5V")
-		(at 161.29 173.99 270)
-		(mirror x)
+		(lib_id "power:+12V")
+		(at 95.25 179.07 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6330,9 +6945,10 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(uuid "478949ca-ba08-436f-ae15-4eda2ec302d9")
-		(property "Reference" "#PWR5V09"
-			(at 157.48 173.99 0)
+		(fields_autoplaced yes)
+		(uuid "47628bcd-6b39-41ca-ac80-93f808630baa")
+		(property "Reference" "#PWR12V03"
+			(at 99.06 179.07 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6342,8 +6958,8 @@
 				)
 			)
 		)
-		(property "Value" "+5V"
-			(at 165.1 173.9899 90)
+		(property "Value" "+12V"
+			(at 91.44 179.0699 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6354,7 +6970,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 161.29 173.99 0)
+			(at 95.25 179.07 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6365,7 +6981,86 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 161.29 173.99 0)
+			(at 95.25 179.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+12V\""
+			(at 95.25 179.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "77ac8609-232d-455d-8a57-effd37ef6425")
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
+					(reference "#PWR12V03")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 143.51 152.4 270)
+		(mirror x)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "478949ca-ba08-436f-ae15-4eda2ec302d9")
+		(property "Reference" "#PWR5V09"
+			(at 139.7 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "+5V"
+			(at 147.32 152.3999 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 143.51 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 143.51 152.4 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6376,7 +7071,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 161.29 173.99 0)
+			(at 143.51 152.4 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6477,9 +7172,9 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+5V")
-		(at 105.41 171.45 0)
-		(unit 1)
+		(lib_id "Amplifier_Operational:Opamp_Dual")
+		(at 130.81 186.69 0)
+		(unit 2)
 		(body_style 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6487,10 +7182,9 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "55a64670-2370-4c42-8c39-b585cad6bb1c")
-		(property "Reference" "#PWR5V03"
-			(at 105.41 175.26 0)
-			(hide yes)
+		(uuid "51d917c1-96af-4326-b0ed-bba18c397015")
+		(property "Reference" "U4"
+			(at 130.81 176.53 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6499,8 +7193,8 @@
 				)
 			)
 		)
-		(property "Value" "+5V"
-			(at 105.41 166.37 0)
+		(property "Value" "LM358AN"
+			(at 130.81 179.07 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6510,7 +7204,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 105.41 171.45 0)
+			(at 130.81 186.69 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6521,7 +7215,190 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 105.41 171.45 0)
+			(at 130.81 186.69 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Dual operational amplifier"
+			(at 130.81 195.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Sim.Library" "${KICAD10_SYMBOL_DIR}/Simulation_SPICE.sp"
+			(at 118.11 200.66 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sim.Name" "kicad_builtin_opamp_dual"
+			(at 118.11 208.28 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sim.Device" "SUBCKT"
+			(at 118.11 205.74 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sim.Pins" "1=out1 2=in1- 3=in1+ 4=vee 5=in2+ 6=in2- 7=out2 8=vcc"
+			(at 118.11 203.2 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property private "KLC_S3.1" "Units A+B are centered, UnitC has a offset so it fits nicely on A or B."
+			(at 118.11 212.09 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property private "KLC_S4.1" "Pin1 and Pin7 are the output, adding a name would look ugly and does not add a benefit."
+			(at 118.11 214.63 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property private "KLC_S6.2" "This is a generic symbol and thus has no datasheet."
+			(at 118.11 217.17 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "6"
+			(uuid "01df8d93-4811-4b7b-887b-31721dfd56fa")
+		)
+		(pin "3"
+			(uuid "b529c52f-acae-4802-bf28-9dd6f1bc8199")
+		)
+		(pin "4"
+			(uuid "0f14d36e-3b39-4c01-9f15-2c6e01ac9afb")
+		)
+		(pin "7"
+			(uuid "7e150b2d-9bdf-42cc-b5ba-cc572c349fd5")
+		)
+		(pin "8"
+			(uuid "fc636e79-58fb-4702-8dbb-ef84ba4992e9")
+		)
+		(pin "2"
+			(uuid "dec22c61-6058-4e8f-836d-d3bd09588295")
+		)
+		(pin "5"
+			(uuid "144e0e2e-3eac-41ae-91ca-098a7d63368c")
+		)
+		(pin "1"
+			(uuid "c43fd8b5-afcd-46da-9d3b-5da78368b0c7")
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
+					(reference "U4")
+					(unit 2)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 78.74 157.48 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "55a64670-2370-4c42-8c39-b585cad6bb1c")
+		(property "Reference" "#PWR5V03"
+			(at 78.74 161.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "+5V"
+			(at 78.74 152.4 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 78.74 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 78.74 157.48 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6532,7 +7409,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 105.41 171.45 0)
+			(at 78.74 157.48 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6556,7 +7433,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 105.41 186.69 0)
+		(at 78.74 172.72 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6567,7 +7444,7 @@
 		(fields_autoplaced yes)
 		(uuid "583ba212-494b-446e-9d40-007cc95ef7b5")
 		(property "Reference" "#PWRGND06"
-			(at 105.41 193.04 0)
+			(at 78.74 179.07 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6578,7 +7455,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 105.41 191.77 0)
+			(at 78.74 177.8 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6588,7 +7465,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 105.41 186.69 0)
+			(at 78.74 172.72 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6599,7 +7476,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 105.41 186.69 0)
+			(at 78.74 172.72 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6610,7 +7487,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 105.41 186.69 0)
+			(at 78.74 172.72 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6820,6 +7697,84 @@
 			(project "Battery Tester"
 				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
 					(reference "ROBOTBT1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 102.87 157.48 0)
+		(mirror x)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "5f3ba58d-1364-4a6b-8b36-f16f990b8426")
+		(property "Reference" "#PWRGND09"
+			(at 102.87 151.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 102.87 152.4 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 102.87 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 102.87 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 102.87 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "1d4c8d22-794f-478e-82e2-c255f1004304")
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
+					(reference "#PWRGND09")
 					(unit 1)
 				)
 			)
@@ -7232,6 +8187,86 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R_US")
+		(at 92.71 165.1 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "882236f1-540d-4edb-920f-421cc0ae9cfa")
+		(property "Reference" "R2"
+			(at 92.71 158.75 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10k Ohm"
+			(at 92.71 161.29 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 92.964 164.084 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 92.71 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 92.71 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "d64d3761-e897-43ac-a29a-a10908b3af66")
+		)
+		(pin "1"
+			(uuid "b56a1ea1-1a7f-4270-b94c-d81b638898f4")
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
+					(reference "R2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 250.19 144.78 0)
 		(unit 1)
@@ -7383,6 +8418,85 @@
 			(project "Battery Tester"
 				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
 					(reference "#PWRGND01")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 123.19 184.15 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "9ead292b-6248-4b69-9f95-01d2f253b56b")
+		(property "Reference" "#PWRGND016"
+			(at 116.84 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 119.38 184.1499 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 123.19 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 123.19 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 123.19 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "dcbe6fbc-f379-44bc-b2a1-9c5030d61f0d")
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
+					(reference "#PWRGND016")
 					(unit 1)
 				)
 			)
@@ -7706,7 +8820,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 95.25 181.61 270)
+		(at 68.58 167.64 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -7717,7 +8831,7 @@
 		(fields_autoplaced yes)
 		(uuid "a971253f-b239-4aeb-a736-eada42fba303")
 		(property "Reference" "#PWRGND05"
-			(at 88.9 181.61 0)
+			(at 62.23 167.64 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7728,7 +8842,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 91.44 181.6099 90)
+			(at 64.77 167.6399 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7739,7 +8853,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 95.25 181.61 0)
+			(at 68.58 167.64 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7750,7 +8864,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 95.25 181.61 0)
+			(at 68.58 167.64 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7761,7 +8875,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 95.25 181.61 0)
+			(at 68.58 167.64 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7856,6 +8970,188 @@
 			(project "Battery Tester"
 				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
 					(reference "#PWR5V02")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Amplifier_Operational:Opamp_Dual")
+		(at 125.73 167.64 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b8ea3e5c-032c-4982-bfb3-173a263e7b5a")
+		(property "Reference" "U1"
+			(at 125.73 157.48 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "LM358AN"
+			(at 125.73 160.02 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 125.73 167.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 125.73 167.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Dual operational amplifier"
+			(at 125.73 176.53 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Sim.Library" "${KICAD10_SYMBOL_DIR}/Simulation_SPICE.sp"
+			(at 113.03 181.61 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sim.Name" "kicad_builtin_opamp_dual"
+			(at 113.03 189.23 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sim.Device" "SUBCKT"
+			(at 113.03 186.69 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sim.Pins" "1=out1 2=in1- 3=in1+ 4=vee 5=in2+ 6=in2- 7=out2 8=vcc"
+			(at 113.03 184.15 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property private "KLC_S3.1" "Units A+B are centered, UnitC has a offset so it fits nicely on A or B."
+			(at 113.03 193.04 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property private "KLC_S4.1" "Pin1 and Pin7 are the output, adding a name would look ugly and does not add a benefit."
+			(at 113.03 195.58 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property private "KLC_S6.2" "This is a generic symbol and thus has no datasheet."
+			(at 113.03 198.12 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid "f0074ac7-b5dd-4367-853f-2b776f46b4dc")
+		)
+		(pin "8"
+			(uuid "f4572237-7fd2-425a-bde9-ca24caf8f5a9")
+		)
+		(pin "4"
+			(uuid "699f0af8-a819-4c8c-83e0-7afe89b941d5")
+		)
+		(pin "2"
+			(uuid "9ca7ee6e-b363-439d-b403-e3abe290ba11")
+		)
+		(pin "7"
+			(uuid "1bc326b7-2019-473b-b5b8-b9d54cb12558")
+		)
+		(pin "3"
+			(uuid "517c6d4e-a8a2-4db7-9ea2-f2cf8589117e")
+		)
+		(pin "5"
+			(uuid "79b68142-143a-4164-9a89-2aff550508a4")
+		)
+		(pin "6"
+			(uuid "e71137d5-d0df-45dc-bbd8-b94cac17c37a")
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
+					(reference "U1")
 					(unit 1)
 				)
 			)
@@ -8017,86 +9313,6 @@
 			(project "Battery Tester"
 				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
 					(reference "C65")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 119.38 179.07 90)
-		(mirror x)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "bf9172f8-0a69-4c1b-9a0b-7922824dd4e4")
-		(property "Reference" "R178"
-			(at 119.38 185.42 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "4.7k"
-			(at 119.38 182.88 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 119.634 180.086 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 119.38 179.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 119.38 179.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "2"
-			(uuid "e4796163-c124-4a67-93d8-fba264f91f7e")
-		)
-		(pin "1"
-			(uuid "c1fad4bd-3969-4fe3-8d44-a3fa05f28efc")
-		)
-		(instances
-			(project "Battery Tester"
-				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
-					(reference "R178")
 					(unit 1)
 				)
 			)
@@ -8534,7 +9750,7 @@
 	)
 	(symbol
 		(lib_id "Analog_DAC:MCP4725xxx-xCH")
-		(at 105.41 179.07 0)
+		(at 78.74 165.1 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -8544,7 +9760,7 @@
 		(dnp no)
 		(uuid "ddc9160e-cec5-4792-ab72-11f9f564b023")
 		(property "Reference" "U2"
-			(at 93.472 186.182 0)
+			(at 66.802 172.212 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8554,7 +9770,7 @@
 			)
 		)
 		(property "Value" "MCP4725xxx-xCH"
-			(at 93.218 188.722 0)
+			(at 66.548 174.752 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8564,7 +9780,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-6"
-			(at 105.41 185.42 0)
+			(at 78.74 171.45 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8575,7 +9791,7 @@
 			)
 		)
 		(property "Datasheet" "http://ww1.microchip.com/downloads/en/DeviceDoc/22039d.pdf"
-			(at 105.41 179.07 0)
+			(at 78.74 165.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8586,7 +9802,7 @@
 			)
 		)
 		(property "Description" "12-bit Digital-to-Analog Converter, integrated EEPROM, I2C interface, SOT-23-6"
-			(at 105.41 179.07 0)
+			(at 78.74 165.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8857,6 +10073,188 @@
 				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
 					(reference "R179")
 					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Amplifier_Operational:Opamp_Dual")
+		(at 102.87 176.53 90)
+		(unit 3)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ed6740bd-b17c-4b74-8e1a-89e9fc5b8bb6")
+		(property "Reference" "U1"
+			(at 102.87 173.99 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "LM358AN"
+			(at 102.87 176.53 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 102.87 176.53 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 102.87 176.53 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Dual operational amplifier"
+			(at 111.76 176.53 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Sim.Library" "${KICAD10_SYMBOL_DIR}/Simulation_SPICE.sp"
+			(at 116.84 189.23 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sim.Name" "kicad_builtin_opamp_dual"
+			(at 124.46 189.23 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sim.Device" "SUBCKT"
+			(at 121.92 189.23 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sim.Pins" "1=out1 2=in1- 3=in1+ 4=vee 5=in2+ 6=in2- 7=out2 8=vcc"
+			(at 119.38 189.23 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property private "KLC_S3.1" "Units A+B are centered, UnitC has a offset so it fits nicely on A or B."
+			(at 128.27 189.23 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property private "KLC_S4.1" "Pin1 and Pin7 are the output, adding a name would look ugly and does not add a benefit."
+			(at 130.81 189.23 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property private "KLC_S6.2" "This is a generic symbol and thus has no datasheet."
+			(at 133.35 189.23 0)
+			(hide yes)
+			(show_name yes)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "1"
+			(uuid "ccdb9c1d-99a4-400c-9e0e-b445d91007a8")
+		)
+		(pin "5"
+			(uuid "9116f1ed-b241-4f54-b29c-401795667615")
+		)
+		(pin "4"
+			(uuid "1f102c9b-4941-4063-98ce-e5f2ce3d3477")
+		)
+		(pin "6"
+			(uuid "4e973cfd-82d1-4ff7-9d55-89ed714722bd")
+		)
+		(pin "8"
+			(uuid "c3593367-a7f3-439f-becf-b73c2d24d852")
+		)
+		(pin "3"
+			(uuid "d42f88e4-6969-49df-b140-3be794b8f0b9")
+		)
+		(pin "7"
+			(uuid "c14135ea-470f-4429-bab3-7fea11ffcad6")
+		)
+		(pin "2"
+			(uuid "44a1b573-4629-46e6-b22b-3db4783d2231")
+		)
+		(instances
+			(project "Battery Tester"
+				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
+					(reference "U1")
+					(unit 3)
 				)
 			)
 		)

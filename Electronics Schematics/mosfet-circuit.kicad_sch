@@ -3337,7 +3337,7 @@
 		)
 		(uuid "fb550ebc-080b-49a5-bd36-87d6d279ac31")
 	)
-	(hierarchical_label "V0"
+	(hierarchical_label "V3"
 		(shape output)
 		(at 88.9 190.5 0)
 		(effects
@@ -3348,7 +3348,7 @@
 		)
 		(uuid "08217468-9930-43ae-98ba-fb0f5274f6f1")
 	)
-	(hierarchical_label "V0"
+	(hierarchical_label "V1"
 		(shape output)
 		(at 88.9 99.06 0)
 		(effects
@@ -3359,7 +3359,7 @@
 		)
 		(uuid "0a07e1bc-344e-4c1d-ba16-1433ef648253")
 	)
-	(hierarchical_label "T0"
+	(hierarchical_label "T2"
 		(shape output)
 		(at 128.27 127 0)
 		(effects
@@ -3381,7 +3381,7 @@
 		)
 		(uuid "437feafd-59dc-4548-ac87-ed0721c7ac93")
 	)
-	(hierarchical_label "T0"
+	(hierarchical_label "T1"
 		(shape output)
 		(at 128.27 81.28 0)
 		(effects
@@ -3403,7 +3403,7 @@
 		)
 		(uuid "95536a74-2f42-4dfd-80c1-acd84db82ee6")
 	)
-	(hierarchical_label "T0"
+	(hierarchical_label "T3"
 		(shape output)
 		(at 128.27 172.72 0)
 		(effects
@@ -3414,7 +3414,7 @@
 		)
 		(uuid "a2ad0e04-a88c-4a2f-88ac-c112ff3858c8")
 	)
-	(hierarchical_label "V0"
+	(hierarchical_label "V2"
 		(shape output)
 		(at 88.9 144.78 0)
 		(effects

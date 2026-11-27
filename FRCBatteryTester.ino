@@ -39,7 +39,7 @@ ADS1115_WE ads_battery_voltage = ADS1115_WE(ADS_BATTERY_VOLTAGE_I2C_ADDRESS);
 const float ROBOT_BATTERY_V_SCALING_FACTOR = (12000.0 + 4700.0) / 4700.0; // 12k top resistor (10k + 1k + 1k) and 4.7k bottom resistor
 const float ROBOT_BATTERY_I_SCALING_FACTOR = 400 / 0.625; // 400 amps across 0.625 volt range
 
-const float THERMISTOR_R_FIXED = 4700.0; // Fixed (bottom) resistor for voltage divider, 4.7k so 85 C stays under the 4.096 V reference
+const float THERMISTOR_R_FIXED = 3900.0; // Fixed (bottom) resistor for voltage divider, 3.9k so 85 C stays under the 4.096 V reference
 const float THERMISTOR_V_IN = 5.0; // Voltage going into Thermistor
 const float THERMISTOR_R_NOMINAL = 10000.0; // Thermistors rated resistance at base temperature
 const float THERMISTOR_T_NOMINAL = 25.0 + 273.15; // 25 degrees Celsius converted to Kelvin

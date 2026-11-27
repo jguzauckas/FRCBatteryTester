@@ -1,3 +1,4 @@
 .vscode/
 build/
 Electronics Schematics/.history/
+*.lck
