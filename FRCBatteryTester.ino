@@ -508,7 +508,10 @@ void log_data() {
 // Prints a "<NAME>:<details>" line and returns NAME for the first limit that's exceeded, or nullptr if
 // everything is in range. The latched ERROR lines repeat NAME, so a host that connects late still sees why.
 const char *should_shut_down() {
-  if (robot_battery_i >= BATTERY_CURRENT_TRIP_A) {
+  // fabs: the HASS reads negative if it's mounted (or its leads swapped) backwards. This trip is the only
+  // one that sees current bypassing the shunts, like the drain bus shorted to ground, so it must work
+  // either way. (A backwards sensor also shows up as negative batt_i in the log.)
+  if (fabs(robot_battery_i) >= BATTERY_CURRENT_TRIP_A) {
     Serial.print("BATT_OVERCURRENT_FAULT:");
     Serial.println(robot_battery_i, 1);
     return "BATT_OVERCURRENT_FAULT";
