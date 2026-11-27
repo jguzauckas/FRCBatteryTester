@@ -9364,7 +9364,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "HTFS400-P"
+		(property "Value" "HASS 400-S"
 			(at 227.584 113.03 0)
 			(show_name no)
 			(do_not_autoplace no)
