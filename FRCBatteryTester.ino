@@ -2,6 +2,7 @@
 #include<Wire.h>
 #include<SPI.h>
 #include<Adafruit_MCP4725.h>
+#include<WDT.h> // Uno R4 (Renesas core) hardware watchdog
 
 #define DAC_I2C_ADDRESS 0x62 // Default address for Adafruit MCP4725
 #define ADS_BATTERY_CURRENT_I2C_ADDRESS 0x48 // U6, ADDR to GND: HASS 400-S output (AIN0) vs. its reference (AIN1)
@@ -43,10 +44,19 @@ const unsigned int TEMPERATURE_SETTLE_US = 3000; // ~9 time constants
 // both ends must match.
 //   H,<field names...>   header: sent at startup and whenever the host sends "H"
 //   D,<values...>        one data line per loop, in header order
-//   anything else        events and faults (WARNING..., ..._FAULT:..., ERROR)
+//   anything else        events and faults: WARNING:..., <NAME>:<details> when a fault trips, then
+//                        ERROR:<NAME> once a second while latched
 const unsigned long SERIAL_BAUD = 115200;
 
 const unsigned long COMMAND_TIMEOUT_MS = 1000; // Drop the load to 0 A if no command arrives for this long
+
+// Hardware watchdog. If the sketch ever stops running loop() (a stuck I2C bus, a hung library call), the
+// software checks stop too and the load would keep running at its last setting. The watchdog resets the
+// Arduino if loop() hasn't refreshed it within this time. On reset every pin goes high-impedance, so R303
+// opens the contactor and R1 turns on the kill switch: the hardware fails safe without any code running.
+// The Uno R4 watchdog allows up to about 5.5 s. A normal loop takes ~40 ms.
+const unsigned long WATCHDOG_TIMEOUT_MS = 2000;
+bool watchdog_running = false; // Only refresh after WDT.begin(): on this chip a refresh is what starts it
 
 Adafruit_MCP4725 dac;
 ADS1115_WE ads_battery_current = ADS1115_WE(ADS_BATTERY_CURRENT_I2C_ADDRESS);
@@ -89,7 +99,15 @@ const int DAC_COUNT = 4095; // DAC resolution is 12 bits (2^12 -1)
 // DAC Control (buffered DAC output, 0-5 V) feeds a 47k / 1.2k divider at each channel's op-amp + input,
 // referenced to that channel's shunt bottom, so full scale per channel is about 0.124 V (about 13 A per MOSFET).
 const float DAC_DIVIDER_RATIO = 1200.0 / (47000.0 + 1200.0);
-const float MAX_CURRENT_REQUEST = 10.0 * 32; // 10 A average per MOSFET, under the 11 A per-MOSFET trip
+const float MAX_CURRENT_REQUEST = 10.0 * 32; // 10 A average per MOSFET
+
+// Over-current trips. At a full 320 A request the channels don't share evenly: channel 0's 9.3 mohm shunt
+// alone puts it ~2% above average (~10.2 A), and LM324A offset (up to 3 mV, ~0.3 A), divider tolerance,
+// the 0.1 mohm rounding of the measured shunts and the outer gain loop (if a channel drops out) can each
+// add a few tenths more. An 11 A trip could fire with nothing wrong, so it's 12 A. A real failure (a
+// shorted MOSFET) is tens to hundreds of amps, so it still trips immediately.
+const float MOSFET_CURRENT_TRIP_A = 12.0;
+const float BATTERY_CURRENT_TRIP_A = MAX_CURRENT_REQUEST * 1.1; // 352 A, from the HASS
 
 // Outer current loop. The DAC uses the 5 V rail as its reference and the 47k / 1.2k dividers have tolerance,
 // so the commanded current is off by a few percent. Each loop compares the total measured across all 32
@@ -127,6 +145,12 @@ float mosfet_avg_temp = 0.0; // Starting temperature
 float current_requested = 0.0; // Current requested at any given time
 unsigned long last_command_ms = 0; // millis() of the last valid command from the host
 
+// Incoming commands are collected a character at a time, so reading them never waits on the host.
+const byte COMMAND_BUFFER_SIZE = 32; // Longest valid command is "A320.0" or "ESTOP"
+char command_buffer[COMMAND_BUFFER_SIZE];
+byte command_length = 0;
+bool command_overflow = false; // Line too long: ignore it up to the next newline
+
 const int MOSFET_COUNT = 32;
 const float SHUNT_RESISTANCES[MOSFET_COUNT] = {0.0093, 0.0095, 0.0095, 0.0095, 
                                              0.0095, 0.0094, 0.0095, 0.0095,
@@ -140,6 +164,15 @@ float total_system_conductance = 0.0;
 float mosfet_currents[MOSFET_COUNT];
 float mosfet_temperatures[MOSFET_COUNT];
 byte next_temperature_address = 0; // Mux address whose thermistors get read on the next loop
+
+// Dead-channel warning. If one MOSFET channel stops conducting (failed MOSFET, op-amp, gate or sense wire),
+// the outer gain loop quietly pushes the other 31 harder to make up the total. That's safe, but you'd want
+// to know. Every channel gets the same setpoint, so a healthy one stays near the average.
+const float CHANNEL_CHECK_MIN_AVG_A = 2.0; // Only check above this average per channel (offsets matter less)
+const float CHANNEL_LOW_FRACTION = 0.5; // "Low" = under half the average
+const unsigned long CHANNEL_LOW_MS = 500; // Must last this long before warning
+unsigned long channel_low_since_ms[MOSFET_COUNT]; // 0 = channel currently fine
+bool channel_low_warned[MOSFET_COUNT]; // Warn once per channel until it recovers or the load drops
 
 void setup() {
   // Battery disconnected and load killed before anything else happens.
@@ -163,7 +196,6 @@ void setup() {
   digitalWrite(ADC_TEMPERATURE_1_CS_PIN, HIGH);
 
   Serial.begin(SERIAL_BAUD);
-  Serial.setTimeout(10);
   print_log_header();
 
   initialize_mosfet_arrays();
@@ -194,6 +226,13 @@ void setup() {
     Serial.println("WARNING:V5_RAIL_ADC_MISSING, assuming 5.0 V for thermistors");
   }
 
+  // A watchdog reset means the sketch hung while the battery was connected. Don't quietly reconnect it:
+  // stay latched until someone presses reset or power-cycles the tester (both clear this flag).
+  if (R_SYSTEM->RSTSR1_b.WDTRF) {
+    Serial.println("WATCHDOG_RESET_FAULT:sketch hung, press reset to restart");
+    shut_down("WATCHDOG_RESET_FAULT");
+  }
+
   delay(1000); // Give hardware time to stabilize
   read_5v_rail(); // Before any thermistor is read
 
@@ -211,11 +250,20 @@ void setup() {
   if (robot_battery_v < BATTERY_START_MIN_V) {
     Serial.print("BATT_TOO_LOW_TO_START:");
     Serial.println(robot_battery_v, 2);
-    shut_down();
+    shut_down("BATT_TOO_LOW_TO_START");
   }
-  if (should_shut_down()) {
-    shut_down();
+  const char *fault = should_shut_down();
+  if (fault != nullptr) {
+    shut_down(fault);
   }
+
+  // Start the watchdog just before the battery is connected. Everything above runs with the contactor
+  // open, so a hang there is harmless. Refuse to connect the battery without it.
+  if (!WDT.begin(WATCHDOG_TIMEOUT_MS)) {
+    Serial.println("WATCHDOG_START_FAULT");
+    shut_down("WATCHDOG_START_FAULT");
+  }
+  watchdog_running = true;
 
   // Close the contactor with the load still killed and the DAC at 0, then release the kill switch.
   digitalWrite(CONTACTOR_PIN, HIGH);
@@ -229,11 +277,15 @@ void initialize_mosfet_arrays() {
   for (byte i = 0; i < MOSFET_COUNT; i++) {
     mosfet_currents[i] = 0.0;
     mosfet_temperatures[i] = 0.0;
+    channel_low_since_ms[i] = 0;
+    channel_low_warned[i] = false;
     total_system_conductance += (1.0 / SHUNT_RESISTANCES[i]);
   }
 }
 
 void loop() {
+  WDT.refresh(); // Proves loop() is still running; see WATCHDOG_TIMEOUT_MS
+
   // Monitor Values
   read_robot_battery();
   read_5v_rail();
@@ -242,28 +294,7 @@ void loop() {
 
   log_data();
 
-  if (Serial.available() > 0) {
-    String incomingCommand = Serial.readStringUntil('\n');
-    incomingCommand.trim();
-
-    if (incomingCommand == "ESTOP") {
-      shut_down();
-    }
-    else if (incomingCommand == "H") {
-      print_log_header();
-    }
-    else if (incomingCommand.substring(0, 1) == "A") {
-      float requested = incomingCommand.substring(1).toFloat();
-      if (requested < 0.0) {
-        requested = 0.0;
-      }
-      if (requested > MAX_CURRENT_REQUEST) {
-        requested = MAX_CURRENT_REQUEST;
-      }
-      current_requested = requested;
-      last_command_ms = millis();
-    }
-  }
+  read_commands();
 
   // Watchdog: if the host stops talking (crash, unplugged cable), stop sinking current.
   // The host must resend its "A<amps>" command at least every COMMAND_TIMEOUT_MS.
@@ -272,11 +303,55 @@ void loop() {
   }
 
   check_load_current(); // Before learning, so an open circuit never winds up the gain
+  check_channel_balance();
   update_gain_correction();
   set_current_request(current_requested); // Use this to control the voltage of the DAC for mosfet control.
 
-  if (should_shut_down()) {
-    shut_down();
+  const char *fault = should_shut_down();
+  if (fault != nullptr) {
+    shut_down(fault);
+  }
+}
+
+// Handle every complete line the host has sent since the last loop, not just one. During playback the
+// host may send faster than the ~40 ms loop; reading one line per loop would let a queue build up, so
+// playback would fall further and further behind (and an ESTOP would wait at the back of the line).
+// Lines are handled in order, so the newest "A" wins and ESTOP acts as soon as it's read.
+// A partial line just waits in command_buffer for the rest of it next loop.
+void read_commands() {
+  while (Serial.available() > 0) {
+    char c = Serial.read();
+    if (c == '\n' || c == '\r') {
+      if (!command_overflow && command_length > 0) {
+        command_buffer[command_length] = '\0';
+        handle_command(command_buffer);
+      }
+      command_length = 0;
+      command_overflow = false;
+    } else if (command_length < COMMAND_BUFFER_SIZE - 1) {
+      command_buffer[command_length++] = c;
+    } else {
+      command_overflow = true;
+    }
+  }
+}
+
+void handle_command(const char *command) {
+  if (strcmp(command, "ESTOP") == 0) {
+    Serial.println("ESTOP_COMMAND:");
+    shut_down("ESTOP_COMMAND");
+  } else if (strcmp(command, "H") == 0) {
+    print_log_header();
+  } else if (command[0] == 'A') {
+    float requested = atof(command + 1);
+    if (requested < 0.0) {
+      requested = 0.0;
+    }
+    if (requested > MAX_CURRENT_REQUEST) {
+      requested = MAX_CURRENT_REQUEST;
+    }
+    current_requested = requested;
+    last_command_ms = millis();
   }
 }
 
@@ -291,7 +366,7 @@ void calibrate_battery_current_zero() {
   if (fabs(battery_i_zero_v) > BATTERY_I_ZERO_MAX_V) {
     Serial.print("BATT_I_ZERO_FAULT:");
     Serial.println(battery_i_zero_v, 4);
-    shut_down(); // Can't trust the current sensor, so never connect the battery
+    shut_down("BATT_I_ZERO_FAULT"); // Can't trust the current sensor, so never connect the battery
   }
 }
 
@@ -303,7 +378,7 @@ void read_5v_rail() {
   if (v < V5_RAIL_MIN || v > V5_RAIL_MAX) {
     Serial.print("V5_RAIL_FAULT:");
     Serial.println(v, 3);
-    shut_down(); // Every sensor and the thermistor math depend on this rail
+    shut_down("V5_RAIL_FAULT"); // Every sensor and the thermistor math depend on this rail
   }
   thermistor_v_in = v;
 }
@@ -430,46 +505,96 @@ void log_data() {
   Serial.println();
 }
 
-bool should_shut_down() {
-  if (robot_battery_i >= (MOSFET_COUNT * 11.0)) {
-    return true;
+// Prints a "<NAME>:<details>" line and returns NAME for the first limit that's exceeded, or nullptr if
+// everything is in range. The latched ERROR lines repeat NAME, so a host that connects late still sees why.
+const char *should_shut_down() {
+  // fabs: the HASS reads negative if it's mounted (or its leads swapped) backwards. This trip is the only
+  // one that sees current bypassing the shunts, like the drain bus shorted to ground, so it must work
+  // either way. (A backwards sensor also shows up as negative batt_i in the log.)
+  if (fabs(robot_battery_i) >= BATTERY_CURRENT_TRIP_A) {
+    Serial.print("BATT_OVERCURRENT_FAULT:");
+    Serial.println(robot_battery_i, 1);
+    return "BATT_OVERCURRENT_FAULT";
   }
   if (robot_battery_v < BATTERY_CUTOFF_V) {
     if (battery_low_since_ms == 0) {
       battery_low_since_ms = millis() | 1; // | 1 so a millis() of exactly 0 doesn't read as "not low"
     } else if (millis() - battery_low_since_ms >= BATTERY_CUTOFF_MS) {
-      return true;
+      Serial.print("BATT_LOW_FAULT:");
+      Serial.println(robot_battery_v, 2);
+      return "BATT_LOW_FAULT";
     }
   } else {
     battery_low_since_ms = 0;
   }
 
   for (byte i = 0; i < MOSFET_COUNT; i++) {
-    if (mosfet_currents[i] > 11.0) {
-      return true;
+    if (mosfet_currents[i] > MOSFET_CURRENT_TRIP_A) {
+      print_channel_fault("FET_OVERCURRENT_FAULT", i, mosfet_currents[i]);
+      return "FET_OVERCURRENT_FAULT";
     }
     if (mosfet_temperatures[i] > 60.0) {
-      return true;
+      print_channel_fault("FET_OVERTEMP_FAULT", i, mosfet_temperatures[i]); // 999.0 = above measurable range
+      return "FET_OVERTEMP_FAULT";
     }
     if (mosfet_temperatures[i] == TEMPERATURE_FAULT) {
-      return true; // A thermistor we can't read means we can't protect that MOSFET
+      print_channel_fault("THERMISTOR_OPEN_FAULT", i, mosfet_temperatures[i]);
+      return "THERMISTOR_OPEN_FAULT"; // A thermistor we can't read means we can't protect that MOSFET
     }
   }
-  return false;
+  return nullptr;
 }
 
-void shut_down() {
-  // Remove the load first: engage the hardware kill switch and zero the DAC, then open the contactor
-  // once the current has dropped so the LEV200 is not breaking full load, then latch.
+// e.g. "FET_OVERCURRENT_FAULT:ch5,12.31"
+void print_channel_fault(const char *name, byte channel, float value) {
+  Serial.print(name);
+  Serial.print(":ch");
+  Serial.print(channel);
+  Serial.print(',');
+  Serial.println(value, 2);
+}
+
+void shut_down(const char *reason) {
+  // Remove the load first: engage the hardware kill switch, then open the contactor once the current has
+  // dropped so the LEV200 is not breaking full load, then latch. Zeroing the DAC goes last because it
+  // needs I2C: if the bus is what failed, the battery is already disconnected before that call can hang.
   current_requested = 0.0;
   digitalWrite(E_STOP_PIN, HIGH);
-  dac.setVoltage(0, false);
   delay(CONTACTOR_OPEN_DELAY_MS);
   digitalWrite(CONTACTOR_PIN, LOW);
+  dac.setVoltage(0, false);
 
   while (true) {
-    Serial.println("ERROR");
+    // Keep refreshing so the watchdog doesn't reset us out of the latch
+    if (watchdog_running) {
+      WDT.refresh();
+    }
+    Serial.print("ERROR:");
+    Serial.println(reason);
     delay(1000);
+  }
+}
+
+// Called once per loop, after read_mosfets() has measured the result of last loop's command.
+// Warning only (no shutdown): e.g. "WARNING:CHANNEL_LOW:ch5,0.21,avg,6.10"
+void check_channel_balance() {
+  float average = mosfet_current_total / MOSFET_COUNT;
+  unsigned long now = millis();
+  for (byte i = 0; i < MOSFET_COUNT; i++) {
+    if (average < CHANNEL_CHECK_MIN_AVG_A || mosfet_currents[i] >= average * CHANNEL_LOW_FRACTION) {
+      channel_low_since_ms[i] = 0;
+      channel_low_warned[i] = false;
+    } else if (channel_low_since_ms[i] == 0) {
+      channel_low_since_ms[i] = now | 1; // | 1 so a millis() of exactly 0 doesn't read as "fine"
+    } else if (!channel_low_warned[i] && now - channel_low_since_ms[i] >= CHANNEL_LOW_MS) {
+      Serial.print("WARNING:CHANNEL_LOW:ch");
+      Serial.print(i);
+      Serial.print(',');
+      Serial.print(mosfet_currents[i], 2);
+      Serial.print(",avg,");
+      Serial.println(average, 2);
+      channel_low_warned[i] = true;
+    }
   }
 }
 
@@ -485,7 +610,7 @@ void check_load_current() {
       Serial.print(" A, measured ");
       Serial.print(mosfet_current_total, 1);
       Serial.println(" A (check CB1 and the contactor)");
-      shut_down();
+      shut_down("NO_CURRENT_FAULT");
     }
   } else {
     no_current_since_ms = 0;
