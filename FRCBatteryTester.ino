@@ -4,7 +4,7 @@
 #include<Adafruit_MCP4725.h>
 
 #define DAC_I2C_ADDRESS 0x62 // Default address for Adafruit MCP4725
-#define ADS_BATTERY_CURRENT_I2C_ADDRESS 0x48 // U6, ADDR to GND: HTFS400-P output (AIN0) vs. its reference (AIN1)
+#define ADS_BATTERY_CURRENT_I2C_ADDRESS 0x48 // U6, ADDR to GND: HASS 400-S output (AIN0) vs. its reference (AIN1)
 #define ADS_BATTERY_VOLTAGE_I2C_ADDRESS 0x49 // U3, ADDR to 5V: battery voltage divider on AIN0
 
 // Pin numbers follow the KiCad schematic (Arduino Uno R4 WiFi shield)
@@ -28,11 +28,13 @@ const float ADS8320_VREF = 4.096; // REF3040 reference
 const float ADS8320_COUNTS = 65536.0; // 16-bit, straight binary, 0 V to VREF
 const SPISettings ADS8320_SPI_SETTINGS(2000000, MSBFIRST, SPI_MODE0); // DCLOCK max is 2.4 MHz at 5 V
 
-// Each ADC input has a 100 ohm / 0.1 uF filter after the mux, so the cap has to recharge every time the
-// mux address changes. Shunt inputs are low impedance (tau ~17 us with mux Ron); the thermistor dividers
-// are ~5k (tau ~0.5 ms), so temperatures get a long dwell on one address per loop instead.
-const unsigned int CURRENT_SETTLE_US = 150; // ~8 time constants
-const unsigned int TEMPERATURE_SETTLE_US = 3000; // ~6 time constants
+// Current ADCs read each shunt differentially (top on +IN, bottom on -IN) through 100 ohm / 1 nF after the
+// mux. Each channel's 0.1 uF C1 sits across its shunt and holds the reading, so switching the mux only
+// disturbs it by ~1% of the difference between neighboring channels; 150 us is plenty.
+// Thermistor ADCs still have 100 ohm / 0.1 uF and the dividers are ~3k (tau ~0.3 ms), so temperatures get
+// a long dwell on one address per loop instead.
+const unsigned int CURRENT_SETTLE_US = 150;
+const unsigned int TEMPERATURE_SETTLE_US = 3000; // ~9 time constants
 
 const unsigned long COMMAND_TIMEOUT_MS = 1000; // Drop the load to 0 A if no command arrives for this long
 
@@ -41,7 +43,12 @@ ADS1115_WE ads_battery_current = ADS1115_WE(ADS_BATTERY_CURRENT_I2C_ADDRESS);
 ADS1115_WE ads_battery_voltage = ADS1115_WE(ADS_BATTERY_VOLTAGE_I2C_ADDRESS);
 
 const float ROBOT_BATTERY_V_SCALING_FACTOR = (10000.0 + 3300.0) / 3300.0; // 10k top resistor and 3.3k bottom resistor
-const float ROBOT_BATTERY_I_SCALING_FACTOR = 400 / 0.625; // 400 amps across 0.625 volt range
+const float ROBOT_BATTERY_I_SCALING_FACTOR = 400 / 0.625; // HASS 400-S: 0.625 V (Vout - Vref) per 400 A
+// The HASS has a small zero error. setup() measures it while the contactor is open (true current is exactly
+// 0 A) and subtracts it from every reading after that.
+const int BATTERY_I_ZERO_SAMPLES = 32; // ADS1115 runs at 128 SPS, so ~8 ms per sample
+const float BATTERY_I_ZERO_MAX_V = 0.1; // ~64 A. A bigger "zero" means the sensor is unpowered or miswired
+float battery_i_zero_v = 0.0;
 
 const float THERMISTOR_R_FIXED = 3900.0; // Fixed (bottom) resistor for voltage divider, 3.9k so 85 C stays under the 4.096 V reference
 const float THERMISTOR_V_IN = 5.0; // Voltage going into Thermistor
@@ -150,6 +157,9 @@ void setup() {
     read_mosfet_temperatures();
   }
 
+  // Contactor is still open, so no current flows through the HASS: whatever it reads now is its zero error.
+  calibrate_battery_current_zero();
+
   // The battery voltage divider sits on the battery side of K1, so the battery can be checked before
   // it is connected. Refuse to start (and latch) if anything is already out of range.
   read_robot_battery();
@@ -215,8 +225,23 @@ void loop() {
   }
 }
 
+void calibrate_battery_current_zero() {
+  float sum = 0.0;
+  for (int i = 0; i < BATTERY_I_ZERO_SAMPLES; i++) {
+    delay(10); // Let a fresh continuous-mode conversion finish
+    sum += ads_battery_current.getResult_V();
+  }
+  battery_i_zero_v = sum / BATTERY_I_ZERO_SAMPLES;
+
+  if (fabs(battery_i_zero_v) > BATTERY_I_ZERO_MAX_V) {
+    Serial.print("BATT_I_ZERO_FAULT:");
+    Serial.println(battery_i_zero_v, 4);
+    shut_down(); // Can't trust the current sensor, so never connect the battery
+  }
+}
+
 void read_robot_battery() {
-  robot_battery_i = ads_battery_current.getResult_V() * ROBOT_BATTERY_I_SCALING_FACTOR;
+  robot_battery_i = (ads_battery_current.getResult_V() - battery_i_zero_v) * ROBOT_BATTERY_I_SCALING_FACTOR;
   robot_battery_v = ads_battery_voltage.getResult_V() * ROBOT_BATTERY_V_SCALING_FACTOR;
 }
 
