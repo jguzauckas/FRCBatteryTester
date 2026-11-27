@@ -5,7 +5,7 @@
 
 #define DAC_I2C_ADDRESS 0x62 // Default address for Adafruit MCP4725
 #define ADS_BATTERY_CURRENT_I2C_ADDRESS 0x48 // U6, ADDR to GND: HASS 400-S output (AIN0) vs. its reference (AIN1)
-#define ADS_BATTERY_VOLTAGE_I2C_ADDRESS 0x49 // U3, ADDR to 5V: battery voltage divider on AIN0
+#define ADS_BATTERY_VOLTAGE_I2C_ADDRESS 0x49 // U3, ADDR to 5V: battery sense wires, Sense+ divider on AIN0 minus Sense- divider on AIN1
 #define ADS_5V_RAIL_I2C_ADDRESS 0x4A // U26, ADDR to SDA: +5V rail wired straight to AIN0 (+/-6.144 V range)
 
 // Pin numbers follow the KiCad schematic (Arduino Uno R4 WiFi shield)
@@ -111,6 +111,14 @@ const float BATTERY_CUTOFF_V = 6.5;
 const unsigned long BATTERY_CUTOFF_MS = 250; // Must stay below BATTERY_CUTOFF_V this long to trip
 const float BATTERY_START_MIN_V = 10.5;
 unsigned long battery_low_since_ms = 0; // 0 = battery currently above BATTERY_CUTOFF_V
+
+// No-current check. The battery sense wires read the battery directly, so an open CB1 (or a contactor that
+// didn't close) no longer shows up as a low battery. Instead, if a real request produces almost no current
+// for a while, something in the high-current path is open: report it and shut down.
+const float NO_CURRENT_CHECK_MIN_A = 30.0; // Only check requests at least this big (A total)
+const float NO_CURRENT_FRACTION = 0.1; // "Almost no current" = under 10% of the request
+const unsigned long NO_CURRENT_MS = 500; // Must last this long, so normal steps never trip it
+unsigned long no_current_since_ms = 0; // 0 = current is flowing (or no check needed)
 
 float robot_battery_v = 12.0; // Starting voltage (high enough to prevent shutdown)
 float robot_battery_i = 0.0; // Starting current (low enough to prevent shutdown)
@@ -263,6 +271,7 @@ void loop() {
     current_requested = 0.0;
   }
 
+  check_load_current(); // Before learning, so an open circuit never winds up the gain
   update_gain_correction();
   set_current_request(current_requested); // Use this to control the voltage of the DAC for mosfet control.
 
@@ -461,6 +470,25 @@ void shut_down() {
   while (true) {
     Serial.println("ERROR");
     delay(1000);
+  }
+}
+
+// Called once per loop, after read_mosfets() has measured the result of last loop's command.
+void check_load_current() {
+  if (last_current_command >= NO_CURRENT_CHECK_MIN_A &&
+      mosfet_current_total < last_current_command * NO_CURRENT_FRACTION) {
+    if (no_current_since_ms == 0) {
+      no_current_since_ms = millis() | 1; // | 1 so a millis() of exactly 0 doesn't read as "flowing"
+    } else if (millis() - no_current_since_ms >= NO_CURRENT_MS) {
+      Serial.print("NO_CURRENT_FAULT:requested ");
+      Serial.print(last_current_command, 1);
+      Serial.print(" A, measured ");
+      Serial.print(mosfet_current_total, 1);
+      Serial.println(" A (check CB1 and the contactor)");
+      shut_down();
+    }
+  } else {
+    no_current_since_ms = 0;
   }
 }
 
