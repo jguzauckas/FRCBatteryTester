@@ -13,6 +13,10 @@ const int S1_PIN = 3;
 const int S2_PIN = 4;
 const int S3_PIN = 5;
 const int E_STOP_PIN = 6; // HIGH = 2N7000 kill switch pulls the DAC control line to ground
+const int CONTACTOR_PIN = A0; // HIGH = Q34 energizes the LEV200 coil (K1), connecting the battery to the MOSFETs.
+                              // R303 pulls the gate low, so K1 stays open while the Arduino resets.
+const unsigned long CONTACTOR_CLOSE_MS = 100; // LEV200 closes in tens of ms; wait this long before loading it
+const unsigned long CONTACTOR_OPEN_DELAY_MS = 10; // Let the kill switch drop the current before the contacts open
 
 // ADS8320 chip selects. All four share SPI SCK and MISO (ICSP header).
 const int ADC_CURRENT_0_CS_PIN = 7;     // U18, V0_MUX: shunt voltages for MOSFETs 0-15
@@ -84,6 +88,9 @@ float mosfet_temperatures[MOSFET_COUNT];
 byte next_temperature_address = 0; // Mux address whose thermistors get read on the next loop
 
 void setup() {
+  // Battery disconnected and load killed before anything else happens.
+  pinMode(CONTACTOR_PIN, OUTPUT);
+  digitalWrite(CONTACTOR_PIN, LOW);
   pinMode(E_STOP_PIN, OUTPUT);
   digitalWrite(E_STOP_PIN, HIGH);
 
@@ -129,6 +136,17 @@ void setup() {
   for (byte address = 0; address < 16; address++) {
     read_mosfet_temperatures();
   }
+
+  // The battery voltage divider sits on the battery side of K1, so the battery can be checked before
+  // it is connected. Refuse to start (and latch) if anything is already out of range.
+  read_robot_battery();
+  if (should_shut_down()) {
+    shut_down();
+  }
+
+  // Close the contactor with the load still killed and the DAC at 0, then release the kill switch.
+  digitalWrite(CONTACTOR_PIN, HIGH);
+  delay(CONTACTOR_CLOSE_MS);
 
   last_command_ms = millis();
   digitalWrite(E_STOP_PIN, LOW);
@@ -310,10 +328,13 @@ bool should_shut_down() {
 }
 
 void shut_down() {
-  // Remove the load first: zero the DAC and engage the hardware kill switch, then latch.
+  // Remove the load first: engage the hardware kill switch and zero the DAC, then open the contactor
+  // once the current has dropped so the LEV200 is not breaking full load, then latch.
   current_requested = 0.0;
-  dac.setVoltage(0, false);
   digitalWrite(E_STOP_PIN, HIGH);
+  dac.setVoltage(0, false);
+  delay(CONTACTOR_OPEN_DELAY_MS);
+  digitalWrite(CONTACTOR_PIN, LOW);
 
   while (true) {
     Serial.println("ERROR");
