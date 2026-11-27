@@ -174,7 +174,7 @@ void setup() {
 
   ads_battery_voltage.init();
   ads_battery_voltage.setVoltageRange_mV(ADS1115_RANGE_4096);
-  ads_battery_voltage.setCompareChannels(ADS1115_COMP_0_GND);
+  ads_battery_voltage.setCompareChannels(ADS1115_COMP_0_1);
   ads_battery_voltage.setMeasureMode(ADS1115_CONTINUOUS);
 
   v5_rail_adc_ok = ads_5v_rail.init();
