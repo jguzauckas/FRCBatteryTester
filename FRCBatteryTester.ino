@@ -317,7 +317,7 @@ bool should_shut_down() {
     if (mosfet_currents[i] > 11.0) {
       return true;
     }
-    if (mosfet_temperatures[i] > 85.0) {
+    if (mosfet_temperatures[i] > 60.0) {
       return true;
     }
     if (mosfet_temperatures[i] == TEMPERATURE_FAULT) {
