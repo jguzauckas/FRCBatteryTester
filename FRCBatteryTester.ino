@@ -113,7 +113,7 @@ const float BATTERY_CURRENT_TRIP_A = MAX_CURRENT_REQUEST * 1.1; // 352 A, from t
 // so the commanded current is off by a few percent. Each loop compares the total measured across all 32
 // shunts with what was asked for last loop and nudges a gain correction applied to the DAC command.
 // Correcting gain (not adding amps) keeps the correction right as the request changes during playback.
-const float GAIN_LEARN_MIN_CURRENT = 30.0; // A total (~1 A per MOSFET). Below this, op-amp offsets (up to
+const float GAIN_LEARN_MIN_CURRENT = 5.0; // A total (~1 A per MOSFET). Below this, op-amp offsets (up to
                                           // ~0.3 A per channel) would skew the estimate, so the gain isn't updated
 const float GAIN_LEARN_RATE = 0.5; // Fraction of the measured error removed each loop (stable for any loop time)
 const float GAIN_CORRECTION_MIN = 0.85;
