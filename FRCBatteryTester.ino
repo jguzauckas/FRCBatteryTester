@@ -165,6 +165,15 @@ float mosfet_currents[MOSFET_COUNT];
 float mosfet_temperatures[MOSFET_COUNT];
 byte next_temperature_address = 0; // Mux address whose thermistors get read on the next loop
 
+// Dead-channel warning. If one MOSFET channel stops conducting (failed MOSFET, op-amp, gate or sense wire),
+// the outer gain loop quietly pushes the other 31 harder to make up the total. That's safe, but you'd want
+// to know. Every channel gets the same setpoint, so a healthy one stays near the average.
+const float CHANNEL_CHECK_MIN_AVG_A = 2.0; // Only check above this average per channel (offsets matter less)
+const float CHANNEL_LOW_FRACTION = 0.5; // "Low" = under half the average
+const unsigned long CHANNEL_LOW_MS = 500; // Must last this long before warning
+unsigned long channel_low_since_ms[MOSFET_COUNT]; // 0 = channel currently fine
+bool channel_low_warned[MOSFET_COUNT]; // Warn once per channel until it recovers or the load drops
+
 void setup() {
   // Battery disconnected and load killed before anything else happens.
   pinMode(CONTACTOR_PIN, OUTPUT);
@@ -268,6 +277,8 @@ void initialize_mosfet_arrays() {
   for (byte i = 0; i < MOSFET_COUNT; i++) {
     mosfet_currents[i] = 0.0;
     mosfet_temperatures[i] = 0.0;
+    channel_low_since_ms[i] = 0;
+    channel_low_warned[i] = false;
     total_system_conductance += (1.0 / SHUNT_RESISTANCES[i]);
   }
 }
@@ -292,6 +303,7 @@ void loop() {
   }
 
   check_load_current(); // Before learning, so an open circuit never winds up the gain
+  check_channel_balance();
   update_gain_correction();
   set_current_request(current_requested); // Use this to control the voltage of the DAC for mosfet control.
 
@@ -557,6 +569,29 @@ void shut_down(const char *reason) {
     Serial.print("ERROR:");
     Serial.println(reason);
     delay(1000);
+  }
+}
+
+// Called once per loop, after read_mosfets() has measured the result of last loop's command.
+// Warning only (no shutdown): e.g. "WARNING:CHANNEL_LOW:ch5,0.21,avg,6.10"
+void check_channel_balance() {
+  float average = mosfet_current_total / MOSFET_COUNT;
+  unsigned long now = millis();
+  for (byte i = 0; i < MOSFET_COUNT; i++) {
+    if (average < CHANNEL_CHECK_MIN_AVG_A || mosfet_currents[i] >= average * CHANNEL_LOW_FRACTION) {
+      channel_low_since_ms[i] = 0;
+      channel_low_warned[i] = false;
+    } else if (channel_low_since_ms[i] == 0) {
+      channel_low_since_ms[i] = now | 1; // | 1 so a millis() of exactly 0 doesn't read as "fine"
+    } else if (!channel_low_warned[i] && now - channel_low_since_ms[i] >= CHANNEL_LOW_MS) {
+      Serial.print("WARNING:CHANNEL_LOW:ch");
+      Serial.print(i);
+      Serial.print(',');
+      Serial.print(mosfet_currents[i], 2);
+      Serial.print(",avg,");
+      Serial.println(average, 2);
+      channel_low_warned[i] = true;
+    }
   }
 }
 
