@@ -59,7 +59,7 @@ const float DAC_V_IN = 5.0; // DAC voltage input is 5 volts
 const int DAC_COUNT = 4095; // DAC resolution is 12 bits (2^12 -1)
 // The DAC output goes through a 4.7k (R178) / 120 ohm (R38) divider before the op-amps,
 // so full scale on DAC Control is about 0.124 V (about 13 A per MOSFET).
-const float DAC_DIVIDER_RATIO = 120.0 / (4700.0 + 120.0);
+const float DAC_DIVIDER_RATIO = 1200.0 / (47000.0 + 1200.0);
 const float MAX_CURRENT_REQUEST = 10.0 * 32; // 10 A average per MOSFET, under the 11 A per-MOSFET trip
 
 float robot_battery_v = 12.0; // Starting voltage (high enough to prevent shutdown)
