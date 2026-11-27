@@ -95,6 +95,14 @@ float gain_correction = 1.0;
 float last_current_command = 0.0; // Request that produced the currents measured this loop
 bool last_command_saturated = false; // DAC was clipped at full scale, so the measurement can't be trusted for learning
 
+// Battery voltage limits. Real FRC batteries sag to 7-8 V on current spikes, so the running cutoff only trips
+// on a sustained sag (about what a roboRIO tolerates). The startup check is stricter: a resting battery
+// below 10.5 V is deeply discharged and shouldn't be loaded at all.
+const float BATTERY_CUTOFF_V = 6.5;
+const unsigned long BATTERY_CUTOFF_MS = 250; // Must stay below BATTERY_CUTOFF_V this long to trip
+const float BATTERY_START_MIN_V = 10.5;
+unsigned long battery_low_since_ms = 0; // 0 = battery currently above BATTERY_CUTOFF_V
+
 float robot_battery_v = 12.0; // Starting voltage (high enough to prevent shutdown)
 float robot_battery_i = 0.0; // Starting current (low enough to prevent shutdown)
 float mosfet_current_total = 0.0; // Starting current of all mosfets
@@ -182,6 +190,11 @@ void setup() {
   // The battery voltage divider sits on the battery side of K1, so the battery can be checked before
   // it is connected. Refuse to start (and latch) if anything is already out of range.
   read_robot_battery();
+  if (robot_battery_v < BATTERY_START_MIN_V) {
+    Serial.print("BATT_TOO_LOW_TO_START:");
+    Serial.println(robot_battery_v, 2);
+    shut_down();
+  }
   if (should_shut_down()) {
     shut_down();
   }
@@ -385,8 +398,14 @@ bool should_shut_down() {
   if (robot_battery_i >= (MOSFET_COUNT * 11.0)) {
     return true;
   }
-  if (robot_battery_v < 9.0) {
-    return true;
+  if (robot_battery_v < BATTERY_CUTOFF_V) {
+    if (battery_low_since_ms == 0) {
+      battery_low_since_ms = millis() | 1; // | 1 so a millis() of exactly 0 doesn't read as "not low"
+    } else if (millis() - battery_low_since_ms >= BATTERY_CUTOFF_MS) {
+      return true;
+    }
+  } else {
+    battery_low_since_ms = 0;
   }
 
   for (byte i = 0; i < MOSFET_COUNT; i++) {
