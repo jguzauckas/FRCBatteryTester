@@ -3725,7 +3725,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "LM324A"
+		(property "Value" "OPA4197"
 			(at 156.21 83.8199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5712,7 +5712,7 @@
 				)
 			)
 		)
-		(property "Value" "LM324A"
+		(property "Value" "OPA4197"
 			(at 200.66 30.48 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6615,7 +6615,7 @@
 				)
 			)
 		)
-		(property "Value" "LM324A"
+		(property "Value" "OPA4197"
 			(at 200.66 102.87 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6972,7 +6972,7 @@
 				)
 			)
 		)
-		(property "Value" "LM324A"
+		(property "Value" "OPA4197"
 			(at 93.98 31.75 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10813,7 +10813,7 @@
 				)
 			)
 		)
-		(property "Value" "LM324A"
+		(property "Value" "OPA4197"
 			(at 92.71 102.87 0)
 			(show_name no)
 			(do_not_autoplace no)
