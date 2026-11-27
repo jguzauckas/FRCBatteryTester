@@ -57,8 +57,8 @@ const float TEMPERATURE_SATURATED = 999.0; // Above the measurable range
 
 const float DAC_V_IN = 5.0; // DAC voltage input is 5 volts
 const int DAC_COUNT = 4095; // DAC resolution is 12 bits (2^12 -1)
-// The DAC output goes through a 4.7k (R178) / 120 ohm (R38) divider before the op-amps,
-// so full scale on DAC Control is about 0.124 V (about 13 A per MOSFET).
+// DAC Control (buffered DAC output, 0-5 V) feeds a 47k / 1.2k divider at each channel's op-amp + input,
+// referenced to that channel's shunt bottom, so full scale per channel is about 0.124 V (about 13 A per MOSFET).
 const float DAC_DIVIDER_RATIO = 1200.0 / (47000.0 + 1200.0);
 const float MAX_CURRENT_REQUEST = 10.0 * 32; // 10 A average per MOSFET, under the 11 A per-MOSFET trip
 

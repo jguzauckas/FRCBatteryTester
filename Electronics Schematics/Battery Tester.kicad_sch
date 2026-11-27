@@ -6699,7 +6699,7 @@
 		(dnp no)
 		(uuid "406355f3-227d-4475-a290-03ac6347cf6e")
 		(property "Reference" "C85"
-			(at 101.854 187.452 0)
+			(at 104.394 188.468 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6710,7 +6710,7 @@
 			)
 		)
 		(property "Value" "0.1 muF"
-			(at 104.14 187.198 0)
+			(at 105.918 191.262 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7183,7 +7183,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "51d917c1-96af-4326-b0ed-bba18c397015")
-		(property "Reference" "U4"
+		(property "Reference" "U1"
 			(at 130.81 176.53 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7347,7 +7347,7 @@
 		(instances
 			(project "Battery Tester"
 				(path "/625d3230-dac1-4eb0-b967-6016d0166323"
-					(reference "U4")
+					(reference "U1")
 					(unit 2)
 				)
 			)
@@ -8208,7 +8208,7 @@
 				)
 			)
 		)
-		(property "Value" "10k Ohm"
+		(property "Value" "1k Ohm"
 			(at 92.71 161.29 90)
 			(show_name no)
 			(do_not_autoplace no)
